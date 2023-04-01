@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra</title>
+</head>
+<body>
+{% extends "personal_collection/base.html" %}
+
+{% block content %}
+  <a href="{% url 'personal_collection:new_title' %}">Dodaj nowy tytuł</a>
+  <p>Książki na twojej półce</p>
+
+  <ul>
+    {% for book in books %}
+      <li>
+          <a href="{% url 'personal_collection:copy' book.id %}">{{ book }}</a>
+      </li>
+    {% empty %}
+      <li>Nie masz jeszcze żadnej książki w kolekcji</li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra</title>
+</head>
+<body>
+{% extends 'personal_collection/base.html' %}
+
+{% block content %}
+
+<p>Tytuł: {{ title.title }}</p>
+<p>Autor: {{ title.author }}</p>
+<p>Gatunek: {{ title.genre }}</p>
+<p>Język: {{ title.language }}</p>
+<p>ISBN: {{ title.isbn_nr }}</p>
+<p>
+    <a href="{% url 'personal_collection:edit_title' copy.id %}">Edytuj</a>
+</p>
+{% endblock content %}
+</body>
+</html>

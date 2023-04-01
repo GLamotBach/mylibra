@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra</title>
+</head>
+<body>
+{% extends "personal_collection/base.html" %}
+{% block content %}
+ <p>Edytuj książkę:</p>
+ <form action="{% url 'personal_collection:edit_title' copy.id %}" method='post'>
+   {% csrf_token %}
+   {{ form.as_p }}
+   <button name="submit">Zapisz zmiany</button>
+ </form>
+{% endblock content %}
+</body>
+</html>

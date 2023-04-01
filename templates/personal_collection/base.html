@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra</title>
+</head>
+<body>
+<p>
+    <a href="{% url 'personal_collection:index' %}">Strona Główna</a> -
+    <a href="{% url 'personal_collection:myshelf' %}">Twoja Kolekcja</a> -
+    {% if user.is_authenticated %}
+      Witaj, {{ user.username }}.
+      <a href="{% url 'users:logout' %}">Wyloguj</a>
+    {% else %}
+      <a href="{% url 'users:register' %}">Rejestruj</a> -
+      <a href="{% url 'users:login' %}">Zaloguj</a>
+    {% endif %}
+
+</p>
+{% block content %}
+{% endblock content %}
+</body>
+</html>
