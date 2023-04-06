@@ -23,9 +23,9 @@
           <a class="nav-link" href="{% url 'personal_collection:myshelf' %}">Twoja Kolekcja</a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav me-2">
         {% if user.is_authenticated %}
-          <li class="nav-item">
+          <li class="nav-item mt-2">
             <span class="navbar-text">Witaj, {{ user.username }}.</span>
           </li>
           <li class="nav-item">

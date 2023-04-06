@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <title>MyLibra</title>
@@ -7,9 +7,17 @@
 <body>
 {% extends "personal_collection/base.html" %}
 
-{% block content %}
-<p>Twój księgozbiór pod kontrolą</p>
-{% endblock content %}
+{% block page_header %}
+  <div class="jumbotron">
+    <h1 class="display-3">Twój księgozbiór pod kontrolą</h1>
+
+    <p class="lead">Załóż konto, aby rozpocząć korzystanie z MyLibra.
+    Skataloguj swój księgozbiór i miej go pod kontrolą.</p>
+
+    <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Utwórz konto &raquo;</a>
+  </div>
+
+{% endblock page_header %}
 
 </body>
 </html>
