@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>MyLibra</title>
+    <title>MyLibra - Logout</title>
 </head>
 <body>
 {% extends "personal_collection/base.html" %}
 
-{% block content %}
-  <p>Poprawne wylogowanie. Zapraszamy ponownie !</p>
-{% endblock content %}
+{% block page_header %}
+  <div class="jumbotron">
+    <h1 class="display-3">Poprawnie wylogowano</h1>
+
+    <p class="lead">Zaloguj się by korzystać z MyLibra</p>
+
+    <a class="btn btn-lg btn-primary" href="{% url 'users:login' %}" role="button">Zaloguj się ponownie &raquo;</a>
+  </div>
+
+{% endblock page_header %}
 </body>
 </html>

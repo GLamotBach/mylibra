@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>MyLibra</title>
+    <title>MyLibra - Nowa Pozycja</title>
 </head>
 <body>
 {% extends "personal_collection/base.html" %}
 
+{% block page_header %}
+  <h1>Dodaj nowy tytuł:</h1>
+{% endblock page_header %}
+
 {% block content %}
-  <p>Dodaj nowy tytuł:</p>
+
 
   <form action="{% url 'personal_collection:new_title' %}" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button name="submit">Dodaj tytuł</button>
+      <button name="submit" class="btn btn-primary">Dodaj tytuł</button>
   </form>
 {% endblock content %}
 </body>

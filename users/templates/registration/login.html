@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>MyLibra</title>
+    <title>MyLibra - Login</title>
 </head>
 <body>
 {% extends "personal_collection/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block page_header %}
+  <h2>Zaloguj się do konta</h2>
+{% endblock page_header %}
 
 {% block content %}
-  {% if form.errors %}
-  <p>Nazwa użytkownika lub hasło jest nieprawidłowe. Spróbuj ponownie.</p>
-  {% endif %}
-
-  <form method="post" action="{% url 'users:login' %}">
+  <form method="post" action="{% url 'users:login' %}" class="form">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% bootstrap_form form %}
 
-    <button name="submit">Zaloguj</button>
+      <button name="submit" class="btn btn-primary">Zaloguj</button>
+
+
     <input type="hidden" name="next" value="{% url 'personal_collection:index' %}" />
   </form>
 {% endblock content %}

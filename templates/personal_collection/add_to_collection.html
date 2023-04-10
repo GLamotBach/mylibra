@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>MyLibra</title>
+    <title>MyLibra - Dodaj do kolekcji</title>
 </head>
 <body>
 {% extends "personal_collection/base.html" %}
 
+{% block page_header %}
+  <h1>Czy chcesz dodać do swojej kolekcji...</h1>
+{% endblock page_header %}
+
 {% block content %}
 
-  <p>Czy chcesz dodać do swojej kolekcji...</p>
-  <p>Tytuł: {{ title.title }}</p>
-  <p>Autor: {{ title.author }}</p>
-  <p>Gatunek: {{ title.genre }}</p>
-  <p>Język: {{ title.language }}</p>
-  <p>ISBN: {{ title.isbn_nr }}</p>
+
+  <h2>{{ title.title }}</h2>
+  <p>Autor: <b>{{ title.author }}</b></p>
+  <p>Gatunek: <b>{{ title.genre }}</b></p>
+  <p>Język: <b>{{ title.language }}</b></p>
+  <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
   <form action="{% url 'personal_collection:add_to_collection' title.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
-    <button name='submit'>Dodaj do kolekcji</button>
+    <button name='submit' class="btn btn-primary">Dodaj do kolekcji</button>
   </form>
 {% endblock content %}
 </body>
