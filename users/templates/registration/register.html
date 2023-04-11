@@ -6,12 +6,13 @@
 </head>
 <body>
 {% extends "personal_collection/base.html" %}
+{% load django_bootstrap5 %}
 
 {% block content %}
 
   <form method="post" action="{% url 'users:register' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% bootstrap_form form %}
 
     <button name="submit" class="btn btn-primary">Rejestruj</button>
     <input type="hidden" name="next" value="{% url 'personal_collection:index' %}" />
