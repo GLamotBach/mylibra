@@ -6,6 +6,7 @@
 </head>
 <body>
 {% extends "personal_collection/base.html" %}
+{% load django_bootstrap5 %}
 
 {% block page_header %}
   <h1>Edytuj książkę:</h1>
@@ -14,7 +15,7 @@
 {% block content %}
  <form action="{% url 'personal_collection:edit_title' copy.id %}" method='post'>
    {% csrf_token %}
-   {{ form.as_p }}
+   {% bootstrap_form form %}
    <button name="submit" class="btn btn-primary">Zapisz zmiany</button>
  </form>
 {% endblock content %}
