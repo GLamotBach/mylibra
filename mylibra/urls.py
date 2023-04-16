@@ -24,3 +24,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('personal_collection.urls')),
 ]
+
+# Dodac path do public_profile gdy pojawią się w nim jakieś linki
