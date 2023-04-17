@@ -51,7 +51,7 @@ def add_to_collection_view(request, title_id):
     '''Dodanie książki do kolekcji'''
     title = BookTitle.objects.get(id=title_id)
 
-    # Sprawdzenie czy że obiekt należy do bieżącego użytkownika - Rozwiązanie tymczasowe
+    # Sprawdzenie czy że obiekt należy do bieżącego użytkownika
     if title.added_by != request.user:
         raise Http404
 
