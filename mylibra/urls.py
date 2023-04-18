@@ -23,6 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('personal_collection.urls')),
+    path('profile/', include('public_profile.urls')),
 ]
 
-# Dodac path do public_profile gdy pojawią się w nim jakieś linki
