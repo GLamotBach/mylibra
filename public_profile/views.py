@@ -24,7 +24,7 @@ def profile_setup_view(request):
 
     # Wyświetlenie pustego formularza
     context = {'form': form}
-    return render(request, 'public_profile/profile_setup.html', context)
+    return render(request, 'public_profile/setup.html', context)
 
 @login_required
 def edit_profile_view(request, profile_id):

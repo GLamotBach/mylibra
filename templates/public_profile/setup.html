@@ -7,7 +7,7 @@
 <body>
   <p>Skonfiguruj swój publiczny profil:</p>
 
-  <form action="{% url 'public_profile:profile_setup_view' %}" method='post'>
+  <form action="{% url 'public_profile:setup' %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
     <button name="submit">Zatwierdź</button>
