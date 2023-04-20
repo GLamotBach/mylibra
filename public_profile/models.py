@@ -9,4 +9,4 @@ class UsersPublicProfile(models.Model):
 
     def __str__(self):
         """Zwraca reprezentacje modelu w postaci ciągu tekstowego"""
-        return self.user
+        return f"{self.user} - {self.public_name}"

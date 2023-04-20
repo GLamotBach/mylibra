@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Profile Setup</title>
+</head>
+<body>
+  <p>Skonfiguruj swój publiczny profil:</p>
+
+  <form action="{% url 'public_profile:setup' %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Zatwierdź</button>
+  </form>
+</body>
+</html>

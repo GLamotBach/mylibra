@@ -6,7 +6,7 @@ from . import views
 app_name = 'personal_collection'
 urlpatterns = [
     # Strona główna.
-    path('', views.index, name='index'), # Nie wiem czy na bank taka nazwa
+    path('', views.index, name='index'),
     # Lista książek użytkownika
     path('myshelf/', views.myshelf_view, name='myshelf'),
     # Szczegółowy opis egzemplarza książki

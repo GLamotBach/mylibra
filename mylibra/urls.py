@@ -23,4 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('personal_collection.urls')),
+    path('profile/', include('public_profile.urls')),
 ]
+

@@ -16,7 +16,7 @@ def register(request):
             new_user = form.save()
             # Zalogowanie użytkownika a następnie przekierowanie go na stronę główną.
             login(request, new_user)
-            return redirect('personal_collection:index')
+            return redirect('public_profile:setup')
 
     # Wyświetlanie pustego formularza.
     context = {'form': form}
