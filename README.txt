@@ -49,6 +49,7 @@ For local installation:
 INSTALLED_APPS = [
     # My apps
     'personal_collection',
+    'public_profile',
     'users',
     # Other company apps
     'django_bootstrap5',
