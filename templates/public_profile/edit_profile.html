@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Edycja profilu</title>
+</head>
+<body>
+{% extends "personal_collection/base.html" %}
+{% load django_bootstrap5 %}
+
+{% block page_header %}
+  <h1>Edytuj profil publiczny:</h1>
+{% endblock page_header %}
+
+{% block content %}
+ <form action="{% url 'public_profile:edit_profile' %}" method='post'>
+   {% csrf_token %}
+   {% bootstrap_form form %}
+   <button name="submit" class="btn btn-primary">Zapisz zmiany</button>
+ </form>
+{% endblock content %}
+</body>
+</html>
