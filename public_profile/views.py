@@ -27,9 +27,9 @@ def profile_setup_view(request):
     return render(request, 'public_profile/setup.html', context)
 
 @login_required
-def edit_profile_view(request, profile_id):
+def edit_profile_view(request):
     '''Strona z ustawieniami publicznego profilu'''
-    profile = UsersPublicProfile.objects.get(id=profile_id) # Do zmiany
+    profile = UsersPublicProfile.objects.get(user=request.user)
 
     # Sprawdzenie czy profil należy do bieżącego użytkownika
     if profile.user != request.user:
@@ -45,3 +45,6 @@ def edit_profile_view(request, profile_id):
         if form.is_valid():
             form.save()
             return redirect('personal_collection:index')
+
+    context = {'profile': profile, 'form': form,}
+    return render(request, 'public_profile/edit_profile.html', context)
