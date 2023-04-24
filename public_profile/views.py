@@ -48,3 +48,10 @@ def edit_profile_view(request):
 
     context = {'profile': profile, 'form': form,}
     return render(request, 'public_profile/edit_profile.html', context)
+
+def profile_view(request, profile_id):
+    '''Strona publicznego profilu użytkownika'''
+    profile = UsersPublicProfile.objects.get(id=profile_id)
+
+    context = {'profile': profile,}
+    return render(request, 'public_profile/profile.html', context)

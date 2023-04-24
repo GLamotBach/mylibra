@@ -9,4 +9,6 @@ urlpatterns = [
     path('setup/', views.profile_setup_view, name='setup'),
     # Strona edycji profilu
     path('edit_profile/', views.edit_profile_view, name='edit_profile'),
+    # Strona publiczna profilu użytkownika
+    path('<int:profile_id>/', views.profile_view, name='profile'),
 ]
