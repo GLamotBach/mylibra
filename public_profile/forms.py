@@ -5,6 +5,8 @@ from .models import UsersPublicProfile
 class UsersPublicProfileForm(forms.ModelForm):
     class Meta:
         model = UsersPublicProfile
-        fields = ['public_name', 'location',]
+        fields = ['public_name', 'location', 'bio',]
         labels = {'public_name': 'Nazwa użytkownika',
-                  'location': 'Lokacja',}
+                  'location': 'Lokacja',
+                  'bio': 'Bio',
+                  }
