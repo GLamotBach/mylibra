@@ -41,7 +41,7 @@ def edit_profile_view(request):
 
     else:
         # Przekazano zmienione dane - przetwarzanie ich.
-        form = UsersPublicProfileForm(instance=profile, data=request.POST)
+        form = UsersPublicProfileForm(request.POST, request.FILES, instance=profile,)
         if form.is_valid():
             form.save()
             return redirect('personal_collection:index')
