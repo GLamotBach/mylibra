@@ -13,7 +13,7 @@
 {% endblock page_header %}
 
 {% block content %}
- <form action="{% url 'public_profile:edit_profile' %}" method='post'>
+ <form action="{% url 'public_profile:edit_profile' %}" method='post' enctype="multipart/form-data">
    {% csrf_token %}
    {% bootstrap_form form %}
    <button name="submit" class="btn btn-primary">Zapisz zmiany</button>
