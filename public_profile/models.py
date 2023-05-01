@@ -8,6 +8,7 @@ class UsersPublicProfile(models.Model):
     public_name = models.CharField(max_length=20)
     location = models.CharField(max_length=50, blank=True)
     bio = models.TextField(max_length=300, blank=True)
+    image = models.ImageField(upload_to='images/', default=None, null=True)
 
     def __str__(self):
         """Zwraca reprezentacje modelu w postaci ciągu tekstowego"""
