@@ -44,7 +44,7 @@ For local installation:
 1.Create a virtual environment.
 2.Deploy a new Django project.
 3.Replace files with the files from the repository.
-4.Add project apps and bootstrap 5 in your local settings.py, INSTALLED_APPS
+4.Add project apps and bootstrap 5 in your local settings.py, add:
 
 INSTALLED_APPS = [
     # My apps
@@ -53,6 +53,11 @@ INSTALLED_APPS = [
     'users',
     # Other company apps
     'django_bootstrap5',
+
+# Media settings
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 5.Edit  DATABASES in settings.py in accordance with your local DB. MyLibra is 
   intended to work with PostgreSQL but SHOULD work with other SQL databases.
