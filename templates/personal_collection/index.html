@@ -7,14 +7,25 @@
 <body>
 {% extends "personal_collection/base.html" %}
 
+{% load static %}
 {% block page_header %}
-  <div class="jumbotron">
-    <h1 class="display-3">Twój księgozbiór pod kontrolą</h1>
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/welcome_medium.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
 
-    <p class="lead">Załóż konto, aby rozpocząć korzystanie z MyLibra.
-    Skataloguj swój księgozbiór i miej go pod kontrolą.</p>
-
-    <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}" role="button">Utwórz konto &raquo;</a>
+  </style>
+  <div class="jumbotron p-4 bg-light">
+    <h1 class="display-4">MyLibra</h1>
+    <p class="lead">Twój księgozbiór pod kontrolą</p>
+    <hr class="my-4">
+    <p>Załóż konto, aby rozpocząć korzystanie z MyLibra</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="{% url 'users:register' %}" role="button">Utwórz konto</a>
+    </p>
   </div>
 
 {% endblock page_header %}
