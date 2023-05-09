@@ -87,7 +87,7 @@ def edit_title_view(request, copy_id):
         form = BookTitleForm(instance=book)
     else:
         # Przekazano zmienione dane - przetwarzanie ich.
-        form = BookTitleForm(instance=book, data=request.POST)
+        form = BookTitleForm(request.POST, request.FILES, instance=book,)
         if form.is_valid():
             form.save()
             return redirect('personal_collection:copy', copy_id=copy_id)

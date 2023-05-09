@@ -13,7 +13,7 @@
 {% endblock page_header %}
 
 {% block content %}
- <form action="{% url 'personal_collection:edit_title' copy.id %}" method='post'>
+ <form action="{% url 'personal_collection:edit_title' copy.id %}" method='post' enctype="multipart/form-data">
    {% csrf_token %}
    {% bootstrap_form form %}
    <button name="submit" class="btn btn-primary">Zapisz zmiany</button>
