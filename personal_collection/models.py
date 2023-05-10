@@ -12,7 +12,7 @@ class BookTitle(models.Model):
     added_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     add_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
-    cover = models.ImageField(upload_to='images/', default=None, null=True)
+    cover = models.ImageField(upload_to='images/', null=True, default='images/placeholder_cover.png',)
 
     def __str__(self):
         """Zwraca reprezentacje modelu w formie tytułu książki"""
