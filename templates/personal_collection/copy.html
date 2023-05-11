@@ -18,6 +18,7 @@
   <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
   <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
+  <img src="{{ title.cover.url }}" width="200" height="300">
   <p>
     <a class="btn btn-primary" href="{% url 'personal_collection:edit_title' copy.id %}">Edytuj</a>
   </p>
