@@ -8,10 +8,13 @@
 
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% load static %}
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
-    <a class="navbar-brand" href="{% url 'personal_collection:index' %}">MyLibra</a>
+    <a class="navbar-brand" href="{% url 'personal_collection:index' %}">
+      <img src="static/personal_collection/images/logo.png" width="50" height="50" alt="my libra logo">
+    </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse"
       data-target="#navbarCollapse" aria-controls="navbarCollapse"
