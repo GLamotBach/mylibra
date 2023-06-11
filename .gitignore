@@ -1,4 +1,4 @@
 .idea/
 lib_env/
 media/
-mylibra/settings.py
+mylibra/.env
