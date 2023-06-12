@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>MyLibra - Twoja kolekcja</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
 </head>
 <body>
-{% extends "personal_collection/base.html" %}
 
-{% load static %}
 {% block page_header %}
   <h1>Twoja kolekcja</h1>
 {% endblock page_header %}
@@ -27,7 +30,6 @@
       <li>Nie masz jeszcze żadnej książki w kolekcji</li>
   {% endfor %}
 
-git
 {% endblock content %}
 </body>
 </html>
