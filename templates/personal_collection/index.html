@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>MyLibra</title>
+    {% extends "personal_collection/base.html" %}
+    {% load static %}
 </head>
 <body>
-{% extends "personal_collection/base.html" %}
 
-{% load static %}
 {% block page_header %}
   <style>
     body {
@@ -18,6 +18,7 @@
     }
 
   </style>
+
   <div class="jumbotron p-4 bg-light">
     <h1 class="display-4">MyLibra</h1>
     <p class="lead">Twój księgozbiór pod kontrolą</p>

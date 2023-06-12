@@ -1,11 +1,10 @@
-{% load django_bootstrap5 %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>MyLibra</title>
-
+    {% load django_bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% load static %}
@@ -13,7 +12,7 @@
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
     <a class="navbar-brand" href="{% url 'personal_collection:index' %}">
-      <img src="static/personal_collection/images/logo.png" width="50" height="50" alt="my libra logo">
+      <img src="{% static 'personal_collection/images/logo.png' %}" width="50" height="50" alt="mylibra logo">
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse"
