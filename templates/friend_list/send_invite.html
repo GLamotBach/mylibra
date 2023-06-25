@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Wyślij zaproszenie</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block page_header %}
+    <h1>Czy chcesz zaprosić {{ invited_user.public_name }} do znajomych ?</h1>
+  {% endblock page_header %}
+
+  {% block content %}
+    <form action="{% url 'friend_list:invite' invited_user.user_id %}" method='post'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name='submit' class="btn btn-primary">Zaproś</button>
+    </form>
+  {% endblock content %}
+
+</body>
+</html>

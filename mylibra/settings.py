@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'personal_collection',
     'public_profile',
     'users',
+    'friend_list',
     # Other company apps
     'django_bootstrap5',
     # Django default apps
@@ -71,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'personal_collection.base_context_processor.navbar_data_renderer',
             ],
         },
     },

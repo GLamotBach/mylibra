@@ -20,12 +20,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from personal_collection import views
 from public_profile import views
+from friend_list import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('personal_collection.urls')),
     path('profile/', include('public_profile.urls')),
+    path('friend/', include('friend_list.urls')),
 ]
 
 if settings.DEBUG:
