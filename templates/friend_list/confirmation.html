@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Dodano do listy znajomych</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block content %}
+  <h2>Pomyślnie dodano {{ accepted_user.public_name }} do znajomych !</h2>
+  {% endblock content %}
+
+</body>
+</html>

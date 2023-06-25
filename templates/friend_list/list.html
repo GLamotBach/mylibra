@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Znajomi</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+
+{% block content %}
+  <p>
+      <a href="{% url 'friend_list:invitations' %}">Zaproszenia</a>
+  </p>
+  {% for friend in friends %}
+    <p>
+        <a href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
+    </p>
+  {% empty %}
+    <h5>Nie dodałeś jeszcze znajomych</h5>
+  {% endfor %}
+{% endblock content %}
+</body>
+</html>

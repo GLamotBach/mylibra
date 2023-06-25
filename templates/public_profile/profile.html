@@ -13,6 +13,18 @@
 {% endblock page_header %}
 
 {% block content %}
+  {% if own_profile %}
+    <p><a href="{% url 'public_profile:edit_profile' %}">Edytuj</a></p>
+  {% elif already_friend %}
+    <p>Znajomy</p>
+  {% elif invitation_pending %}
+    <p>Zaproszenie wysłane</p>
+  {% elif invitation_to_accept %}
+    <p>Zaproszenie otrzymane <a href="{% url 'friend_list:accept_invite' profile.id %}">Potwierdź</a></p>
+  {% else %}
+    <p><a href="{% url 'friend_list:invite' profile.user_id %}">Zaproś</a></p>
+  {% endif %}
+
   <p>Lokacja: {{ profile.location }}</p>
   <p>Bio:</p>
   <p>{{ profile.bio }}</p>

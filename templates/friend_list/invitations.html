@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Zaproszenia</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+
+  {% block content %}
+  <h3>Zostałeś zaproszony przez</h3>
+    {% for i in inbox %}
+      <p>
+        <a href="{% url 'public_profile:profile' i.from_user.id %}">
+        {{ i.from_user.public_name }}
+        </a>
+        <a href="{% url 'friend_list:accept_invite' i.from_user.id %}">Potwierdź</a>
+
+      </p>
+    {% empty %}
+      <h5>Nie masz oczekujących zaproszeń</h5>
+    {% endfor %}
+
+    <br/>
+  <h3>Twoje zaproszenia oczekujące na potwierdzenie</h3>
+    {% for o in outbox %}
+      <p>
+        <a href="{% url 'public_profile:profile' o.to_user.id %}">
+        {{ o.to_user.public_name }}
+        </a>
+      </p>
+    {% empty %}
+      <h5>Nie wysłałeś zaproszeń oczekujących na akceptacje</h5>
+    {% endfor %}
+  {% endblock content %}
+
+</body>
+</html>
