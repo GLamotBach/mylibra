@@ -1,32 +1,34 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
 
 class BookTitle(models.Model):
+    """Information about a book title"""
     title = models.CharField(max_length=200)
-    author = models.CharField(max_length=200) #Dodać podpowiedzi istniejacych w bazie autorów
-    genre = models.CharField(max_length=50, blank=True) #Zmienic na choice z wyborem gatunków, albo podpowiedzi
-    isbn_nr = models.CharField(max_length=17, blank=True) #Dodać-walidator numeru, API czy coś
-    language = models.CharField(max_length=20, blank=True) #Dodac domyslny wybór jako polski
+    author = models.CharField(max_length=200)
+    genre = models.CharField(max_length=50, blank=True)
+    isbn_nr = models.CharField(max_length=17, blank=True)
+    language = models.CharField(max_length=20, blank=True)
     added_by = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     add_date = models.DateTimeField(auto_now_add=True)
     edit_date = models.DateTimeField(auto_now=True)
     cover = models.ImageField(upload_to='images/', null=True, default='images/placeholder_cover.png',)
 
     def __str__(self):
-        """Zwraca reprezentacje modelu w formie tytułu książki"""
-        return self.title #To widac w panelu admina
+        """Displays book title in the admin panel"""
+        return self.title
+
 
 class BookCopy(models.Model):
+    """Specific copy of a book title"""
     book_title = models.ForeignKey(BookTitle, on_delete=models.PROTECT)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     add_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        """ Informacje dodatkowe przydatne podczas zarzadzania modelem"""
-        verbose_name_plural = 'BookCopies' #Zmienia sposób w jaki sposob django bedzie sie odnosił do wielu obiektów
+        """Additional information useful for managing the model"""
+        verbose_name_plural = 'BookCopies'
 
     def __str__(self):
-        """Zwraca reprezentacje modelu w formie tytułu ksiązki"""
+        """Displays book copy title in the admin panel"""
         return f"{self.book_title}" #Tu dodac jeszcze nazwe wlasciciela

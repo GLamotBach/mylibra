@@ -1,14 +1,14 @@
-"""Definiuje wzorce URL dla public_profile"""
+"""URL patterns for public_profile"""
 
 from django.urls import path
 from . import views
 
 app_name = 'public_profile'
 urlpatterns = [
-    # Strona setupu profilu
+    # Public profile initial setup page
     path('setup/', views.profile_setup_view, name='setup'),
-    # Strona edycji profilu
+    # Profile information editing page
     path('edit_profile/', views.edit_profile_view, name='edit_profile'),
-    # Strona publiczna profilu użytkownika
+    # User's public profile page
     path('<int:profile_id>/', views.profile_view, name='profile'),
 ]
