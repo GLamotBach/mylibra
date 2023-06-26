@@ -5,17 +5,14 @@ from django.http import HttpResponseRedirect, Http404
 from .models import UsersPublicProfile
 from .forms import UsersPublicProfileForm
 from friend_list.models import FriendList, FriendInvite
-# Create your views here.
+
 
 @login_required
 def profile_setup_view(request):
-    '''Strona wstępnego ustawienia publicznego profilu'''
+    """Initial public profile setup"""
     if request.method != 'POST':
-        # Nie przekazano danych - tworzenie pustego formularza.
         form = UsersPublicProfileForm()
-
     else:
-        # Przekazano dane za pomocą rządania POST - przetwarzanie danych.
         form = UsersPublicProfileForm(data=request.POST)
         if form.is_valid():
             profile = form.save(commit=False)
@@ -23,25 +20,21 @@ def profile_setup_view(request):
             profile.save()
             return redirect('personal_collection:index')
 
-    # Wyświetlenie pustego formularza
     context = {'form': form}
     return render(request, 'public_profile/setup.html', context)
 
+
 @login_required
 def edit_profile_view(request):
-    '''Strona z ustawieniami publicznego profilu'''
+    """Page for editing user's public profile"""
     profile = UsersPublicProfile.objects.get(user=request.user)
 
-    # Sprawdzenie czy profil należy do bieżącego użytkownika
     if profile.user != request.user:
         raise Http404
 
     if request.method != 'POST':
-        # Wypełnienie formularza aktualną treścią.
         form = UsersPublicProfileForm(instance=profile)
-
     else:
-        # Przekazano zmienione dane - przetwarzanie ich.
         form = UsersPublicProfileForm(request.POST, request.FILES, instance=profile,)
         if form.is_valid():
             form.save()
@@ -49,6 +42,7 @@ def edit_profile_view(request):
 
     context = {'profile': profile, 'form': form,}
     return render(request, 'public_profile/edit_profile.html', context)
+
 
 @login_required
 def profile_view(request, profile_id):

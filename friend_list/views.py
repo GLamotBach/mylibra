@@ -6,9 +6,10 @@ from .models import FriendList, FriendInvite
 from .forms import FriendInviteForm, FriendListForm
 from public_profile.models import UsersPublicProfile
 
+
 @login_required
 def friend_list_view(request):
-    '''Strona wyświetlająca listę znajomych''' # Do przerobienia
+    """Page displaying the friend list"""
     list_owner = UsersPublicProfile.objects.get(user_id=request.user)
     friends = FriendList.objects.filter(list_owner=list_owner.id).select_related("friend")
     context = {'friends': friends,}
@@ -16,45 +17,45 @@ def friend_list_view(request):
 
 
 @login_required
-def friend_invite_view(request, profile_id): # Chyba można uprościć.
-    '''Strona wysłania zaproszenia do znajomych'''
+def friend_invite_view(request, profile_id):
+    """Page for sending friend invitation"""
     invite_sender = UsersPublicProfile.objects.get(user_id=request.user)
     invited_user = UsersPublicProfile.objects.get(user_id=profile_id)
+
     # Check if users are not already friends
     already_friends = FriendList.objects.filter(list_owner=invite_sender.id, friend=invited_user.id)
     if already_friends.exists():
         raise Http404
 
     if request.method != 'POST':
-        # Generowanie strony wysłania zaproszenia
         form = FriendInviteForm()
 
     else:
         form = FriendInviteForm(data=request.POST)
         if form.is_valid():
-            invite = form.save(commit=False)  # Egzemplarz utworzony lecz nie zapisany w DB
+            invite = form.save(commit=False)
             invite.from_user = invite_sender
             invite.to_user = invited_user
-            invite.save()  # Zapisanie egzemplarza w DB
-            return redirect('personal_collection:myshelf') # Tymczasowo
+            invite.save()
+            return redirect('friend_list:invitations')
 
-    # Wyświetlenie strony
     context = {'invited_user': invited_user, 'form': form,}
     return render(request, 'friend_list/send_invite.html', context)
 
+
 @login_required
 def invitation_list_view(request):
-    '''Wyświetla bierzące zaproszenia'''
+    """Lists of pending invitation, send and received"""
     profile = UsersPublicProfile.objects.get(user_id=request.user)
-    # Zaproszenia przychodzące
+    # Received invitations
     invitation_inbox = FriendInvite.objects.filter(to_user_id=profile.id).select_related("from_user")
 
-    # Zaproszenia wychodzące
+    # Send invitations
     invitation_outbox = FriendInvite.objects.filter(from_user_id=profile.id).select_related("to_user")
 
-    # Przekazania danych do strony
     context = {'inbox': invitation_inbox, 'outbox': invitation_outbox,}
     return render(request, 'friend_list/invitations.html', context)
+
 
 @login_required
 def invitation_accept_view(request, profile_id):
