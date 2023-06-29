@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Szukaj tytułu</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+{% block content %}
+
+  <p>
+  <form role="search" method="post" action="{% url 'personal_collection:title_search' %}">
+      {% csrf_token %}
+      <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
+      <button type="submit">Szukaj</button>
+  </form>
+  </p>
+  <p>
+  <a class="btn btn-primary" href="{% url 'personal_collection:new_title' %}">Dodaj nowy tytuł</a>
+  </p>
+
+{% if query %}
+    {% if results %}
+      {% for result in results %}
+        <p>
+             <a href="{% url 'personal_collection:title' result.id %}">{{ result.title }}</a>
+            {{ result.author }}
+            <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' result.id %}">Dodaj</a>
+        </p>
+      {% endfor %}
+    {% else %}
+      <h3>Brak wyników wyszukiwania</h3>
+    {% endif %}
+  {% else %}
+    <h3>Podaj nazwę książki którą chcesz wyszukać</h3>
+  {% endif %}
+
+{% endblock content %}
+</body>
+</html>

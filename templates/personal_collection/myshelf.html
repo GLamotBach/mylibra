@@ -17,7 +17,12 @@
 
 {% block content %}
   <p>
-    <a class="btn btn-primary" href="{% url 'personal_collection:new_title' %}">Dodaj nowy tytuł</a>
+    <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
+      <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
+      {% csrf_token %}
+      <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
+      <button type="submit">Szukaj</button>
+  </form>
   </p>
 
   {% for book in books %}

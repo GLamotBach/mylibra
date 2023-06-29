@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
-    <title>MyLibra - Książka</title>
+    <title>MyLibra - Tytuł</title>
+    {% extends 'personal_collection/base.html' %}
 </head>
 <body>
-{% extends 'personal_collection/base.html' %}
 
 {% block page_header %}
   <h1>{{ title.title }}</h1>
@@ -14,17 +13,13 @@
 
 {% block content %}
 
+  <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' title.id %}">Dodaj</a>
   <p>Autor: <b>{{ title.author }}</b></p>
   <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
   <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
   <img src="{{ title.cover.url }}" width="200" height="300">
 
-  {% if ownership %}
-    <p>
-      <a class="btn btn-primary" href="{% url 'personal_collection:edit_title' copy.id %}">Edytuj</a>
-    </p>
-  {% endif %}
 {% endblock content %}
 </body>
 </html>

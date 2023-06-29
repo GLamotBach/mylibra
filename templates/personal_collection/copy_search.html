@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Wyszukiwanie</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+{% block content %}
+
+{% if query %}
+    {% if results %}
+      {% for result in results %}
+        <p>
+          {{ result }}
+        </p>
+      {% endfor %}
+    {% else %}
+      <h3>Brak wyników wyszukiwania</h3>
+    {% endif %}
+  {% else %}
+    <h3>Podaj nazwę książki którą chcesz wyszukać</h3>
+  {% endif %}
+
+{% endblock content %}
+</body>
+</html>

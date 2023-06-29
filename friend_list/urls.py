@@ -13,4 +13,6 @@ urlpatterns = [
     path('invitations/', views.invitation_list_view, name='invitations'),
     # Accepting invitation to friend list
     path('confirm/<int:profile_id>/', views.invitation_accept_view, name='accept_invite'),
+    # Search
+    path('search/', views.user_search_view, name='user_search'),
 ]

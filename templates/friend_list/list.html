@@ -12,6 +12,12 @@
   <p>
       <a href="{% url 'friend_list:invitations' %}">Zaproszenia</a>
   </p>
+   <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
+      {% csrf_token %}
+      <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
+      <button type="submit">Szukaj</button>
+  </form>
+  <h3>Znajomi:</h3>
   {% for friend in friends %}
     <p>
         <a href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
