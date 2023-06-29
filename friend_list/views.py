@@ -84,6 +84,20 @@ def invitation_accept_view(request, profile_id):
     return render(request, 'friend_list/confirmation.html', context)
 
 
+@login_required
+def user_search_view(request):
+    """Shows the results of searching for users"""
+    if request.method == 'POST':
+        search_query = request.POST["search_query"]
+        results = UsersPublicProfile.objects.filter(public_name__icontains=search_query)
+        context = {'query': search_query, 'results': results,}
+    else:
+        context = {}
+    return render(request, 'friend_list/search.html', context)
+
+
+
+
 
 
 

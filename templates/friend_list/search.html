@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Wyszukiwanie</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+ {% block content %}
+
+  <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
+      {% csrf_token %}
+      <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
+      <button type="submit">Szukaj</button>
+  </form>
+
+   {% if query %}
+    {% if results %}
+      {% for result in results %}
+        <p>
+          <a href="{% url 'public_profile:profile' result.id %}">{{ result.public_name }}</a>
+        </p>
+      {% endfor %}
+    {% else %}
+      <h3>Brak wyników wyszukiwania</h3>
+    {% endif %}
+  {% else %}
+    <h3>Podaj nazwę użytkownika którego chcesz wyszukać</h3>
+  {% endif %}
+
+ {% endblock content %}
+</body>
+</html>
