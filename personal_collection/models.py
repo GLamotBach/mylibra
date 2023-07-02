@@ -31,4 +31,4 @@ class BookCopy(models.Model):
 
     def __str__(self):
         """Displays book copy title in the admin panel"""
-        return f"{self.book_title}" #Tu dodac jeszcze nazwe wlasciciela
+        return f"{self.book_title}"

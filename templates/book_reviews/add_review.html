@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Dodaj recenzję</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block page_header %}
+    <h1>Dodaj recenzję</h1>
+  {% endblock page_header %}
+
+  {% block content %}
+    <form action="{% url 'book_reviews:add_review' read_book_id %}" method="post">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button name="submit" class="btn btn-primary">Dodaj recenzję</button>
+    </form>
+  {% endblock content %}
+</body>
+</html>

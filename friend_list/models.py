@@ -12,6 +12,7 @@ class FriendInvite(models.Model):
         """Returns inviting user's id in admin panel"""
         return self.from_user
 
+
 class FriendList(models.Model):
     """Contains information about a friend relation between two users"""
     list_owner = models.ForeignKey(UsersPublicProfile, related_name='list_owner', on_delete=models.CASCADE)

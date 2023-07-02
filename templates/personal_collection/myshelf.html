@@ -19,16 +19,17 @@
   <p>
     <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
       <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
-      {% csrf_token %}
-      <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
-      <button type="submit">Szukaj</button>
-  </form>
+        {% csrf_token %}
+        <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
+        <button type="submit">Szukaj</button>
+      </form>
   </p>
 
   {% for book in books %}
     <div class="card mb-3">
       <h7 class="card-header">
           <a href="{% url 'personal_collection:copy' book.id %}">{{ book }}</a>
+          {{ book.book_title.author }}
       </h7>
     </div>
   {% empty %}

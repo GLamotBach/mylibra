@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Przeczytane książki</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+
+  {% block page_header %}
+    <h1>Przeczytane książki</h1>
+  {% endblock page_header %}
+
+  {% block content %}
+    {% if read_books %}
+      {% for book in read_books %}
+        <p>
+          <div class="card mb-3">
+            <h7 class="card-header">
+              <a href="{% url 'personal_collection:title' book.book_title.id %}">{{ book.book_title.title }}</a>
+              {{ book.book_title.author }}
+              <a class="btn btn-primary" href="{% url 'book_reviews:add_review' book.id %}">Dodaj recenzję</a>
+            </h7>
+          </div>
+        </p>
+      {% endfor %}
+    {% else %}
+      <h3>Brak przeczytanych książek</h3>
+    {% endif %}
+
+  {% endblock content %}
+
+</body>
+</html>
