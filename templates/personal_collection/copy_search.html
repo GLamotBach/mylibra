@@ -7,14 +7,28 @@
     {% load django_bootstrap5 %}
 </head>
 <body>
-{% block content %}
+{% block page_header %}
+  <h1>Twoja kolekcja - Wyniki wyszukiwania dla: {{ query }}</h1>
+{% endblock page_header %}
 
+{% block content %}
+  <p>
+  <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
+  <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
+      {% csrf_token %}
+      <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
+      <button type="submit">Szukaj</button>
+  </form>
+  </p>
 {% if query %}
     {% if results %}
       {% for result in results %}
-        <p>
-          {{ result }}
-        </p>
+        <div class="card mb-3">
+          <h7 class="card-header">
+            <a href="{% url 'personal_collection:copy' result.id %}">{{ result }}</a>
+              {{ result.book_title.author }}
+          </h7>
+        </div>
       {% endfor %}
     {% else %}
       <h3>Brak wyników wyszukiwania</h3>

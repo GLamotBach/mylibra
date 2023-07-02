@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 from personal_collection import views
 from public_profile import views
 from friend_list import views
+from book_reviews import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('', include('personal_collection.urls')),
     path('profile/', include('public_profile.urls')),
     path('friend/', include('friend_list.urls')),
+    path('review/', include('book_reviews.urls')),
 ]
 
 if settings.DEBUG:

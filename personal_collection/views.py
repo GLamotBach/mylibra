@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.db.models import Q
 from .models import BookCopy, BookTitle
 from .forms import BookTitleForm, BooKCopyForm
+from book_reviews.models import ReadBook
 
 
 def index(request):
@@ -26,15 +27,18 @@ def copy_view(request, copy_id):
     copy = BookCopy.objects.get(id=copy_id)
     title = BookTitle.objects.get(id=copy.book_title_id)
 
-    if copy.owner != request.user:
-        raise Http404
-
     # Checking if user is the same person who added the title.
     ownership = False
     if request.user == title.added_by:
         ownership = True
 
-    context = {'copy': copy, 'title': title, 'ownership': ownership}
+    # Checking if user has read this book
+    read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
+    book_is_read = False
+    if read:
+        book_is_read = True
+
+    context = {'copy': copy, 'title': title, 'ownership': ownership, 'book_is_read': book_is_read}
     return render(request, 'personal_collection/copy.html', context)
 
 
@@ -101,9 +105,10 @@ def copy_search_view(request):
     """Shows the results of searching for book copy in collection"""
     if request.method == 'POST':
         search_query = request.POST["search_query"]
-        # To query nie bangala
-        results = BookCopy.objects.filter(title__icontains=search_query,
-                                          owner=request.user).select_related("book_title_id")
+        results = BookCopy.objects.filter\
+            (Q(book_title__title__icontains=search_query) |
+             Q(book_title__author__icontains=search_query),
+             owner=request.user,)
         context = {'query': search_query, 'results': results,}
     else:
         context = {}
@@ -126,5 +131,11 @@ def title_view(request, title_id):
     """Detailed information about a book title"""
     title = BookTitle.objects.get(id=title_id)
 
-    context = {'title': title,}
+    # Checking if user has read this book
+    read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
+    book_is_read = False
+    if read:
+        book_is_read = True
+
+    context = {'title': title, 'book_is_read': book_is_read}
     return render(request, 'personal_collection/title.html', context)

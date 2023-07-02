@@ -21,14 +21,19 @@
       <span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'personal_collection:myshelf' %}">Twoja Kolekcja</a>
-        </li>
+
       </ul>
       <ul class="navbar-nav me-2">
         {% if user.is_authenticated %}
+
           <li class="nav-item mt-2">
             <span class="navbar-text">Witaj, {{ logged_user.public_name }}.</span>
+          </li>
+          <li class="nav-item">
+          <a class="nav-link" href="{% url 'personal_collection:myshelf' %}">Twoja Kolekcja</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'book_reviews:my_read_list' %}">Przeczytane</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'friend_list:friendlist' %}">Znajomi</a>

@@ -14,6 +14,12 @@
 {% block content %}
 
   <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' title.id %}">Dodaj</a>
+  {% if book_is_read %}
+    <p>Przeczytana</p>
+  {% else %}
+    <p><a class="btn btn-primary" href="{% url 'book_reviews:read_book' title.id %}">Oznacz jako przeczytaną</a></p>
+  {% endif %}
+
   <p>Autor: <b>{{ title.author }}</b></p>
   <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
