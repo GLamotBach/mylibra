@@ -13,8 +13,11 @@
   {% endblock page_header %}
 
   {% block content %}
+    <h2>Bez recenzji</h2>
     {% if read_books %}
       {% for book in read_books %}
+        {% if book.id in reviewed_books %}
+        {% else %}
         <p>
           <div class="card mb-3">
             <h7 class="card-header">
@@ -24,10 +27,29 @@
             </h7>
           </div>
         </p>
+        {% endif %}
       {% endfor %}
     {% else %}
       <h3>Brak przeczytanych książek</h3>
     {% endif %}
+
+    <h2>Zrecenzowane książki</h2>
+    {% if reviews %}
+      {% for r in reviews %}
+        <p>
+          <div class="card mb-3">
+            <h7 class="card-header">
+              <a href="{% url 'personal_collection:title' r.read.book_title.id %}">{{ r.read.book_title.title }}</a>
+              {{ r.read.book_title.author }}
+              <a class="btn btn-primary" href="{% url 'book_reviews:edit_review' r.id %}">Edytuj recenzję</a>
+            </h7>
+          </div>
+        </p>
+      {% endfor %}
+    {% else %}
+      <h3>Brak zrecenzowanych książek</h3>
+    {% endif %}
+
 
   {% endblock content %}
 
