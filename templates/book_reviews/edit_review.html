@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Edytuj recenzję</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block page_header %}
+    <h1>Edytuj recenzję: {{ review.read.book_title.title }}</h1>
+  {% endblock page_header %}
+
+  {% block content %}
+    <form action="{% url 'book_reviews:edit_review' review.id %}" method='post' enctype="multipart/form-data">
+     {% csrf_token %}
+     {% bootstrap_form form %}
+     <button name="submit" class="btn btn-primary">Zapisz zmiany</button>
+    </form>
+  {% endblock content %}
+
+</body>
+</html>
