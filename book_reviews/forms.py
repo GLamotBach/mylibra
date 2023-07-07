@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import ReadBook, BookReview
+from .models import ReadBook, BookReview, BookRating
 
 
 class ReadBookForm(forms.ModelForm):
@@ -14,5 +14,11 @@ class BookReviewForm(forms.ModelForm):
         model = BookReview
         fields = ['review']
         labels = {'review': 'Recenzja'}
+
+class BookRatingForm(forms.ModelForm):
+    class Meta:
+        model = BookRating
+        fields = ['rating']
+        labels = {'rating': 'Ocena'}
 
 

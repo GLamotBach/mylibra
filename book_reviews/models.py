@@ -17,7 +17,7 @@ class ReadBook(models.Model):
 
 class BookReview(models.Model):
     """Book review added by user"""
-    read = models.ForeignKey(ReadBook, on_delete=models.CASCADE)
+    read = models.OneToOneField(ReadBook, on_delete=models.CASCADE)
     title = models.ForeignKey(BookTitle, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
@@ -30,9 +30,17 @@ class BookReview(models.Model):
 
 class BookRating(models.Model):
     """Rating of a book by an user"""
-    book = models.ForeignKey(BookTitle, on_delete=models.CASCADE)
+    ONE_STAR = 1
+    TWO_STAR = 2
+    THREE_STAR = 3
+    FOUR_STAR = 4
+    FIVE_STAR = 5
+    STAR_RATING_CHOICES = [(ONE_STAR, "1"), (TWO_STAR, "2"), (THREE_STAR, "3"), (FOUR_STAR, "4"), (FIVE_STAR, "5")]
+
+    read = models.OneToOneField(ReadBook, on_delete=models.CASCADE)
+    book = models.ForeignKey(BookTitle, on_delete=models.CASCADE) #Czy konieczne ?
     reader = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.IntegerField(null=True)
+    rating = models.IntegerField(choices=STAR_RATING_CHOICES)
 
     def __str__(self):
         """Displays book and reader who added the rating in the admin panel"""

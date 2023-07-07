@@ -13,42 +13,37 @@
   {% endblock page_header %}
 
   {% block content %}
-    <h2>Bez recenzji</h2>
     {% if read_books %}
+
       {% for book in read_books %}
-        {% if book.id in reviewed_books %}
-        {% else %}
+
         <p>
           <div class="card mb-3">
             <h7 class="card-header">
               <a href="{% url 'personal_collection:title' book.book_title.id %}">{{ book.book_title.title }}</a>
               {{ book.book_title.author }}
-              <a class="btn btn-primary" href="{% url 'book_reviews:add_review' book.id %}">Dodaj recenzję</a>
+
+              {% if book.bookreview %}
+                <a class="btn btn-primary" href="{% url 'book_reviews:edit_review' book.id %}">Edytuj recenzję</a>
+              {% else %}
+                <a class="btn btn-primary" href="{% url 'book_reviews:add_review' book.id %}">Dodaj recenzję</a>
+              {% endif %}
+
+              {% if book.bookrating %}
+              Twoja ocena: {{ book.bookrating.rating }}
+              {% else %}
+                <a class="btn btn-primary" href="{% url 'book_reviews:rate_book' book.id %}">Oceń</a>
+              {% endif %}
             </h7>
           </div>
         </p>
-        {% endif %}
       {% endfor %}
-    {% else %}
-      <h3>Brak przeczytanych książek</h3>
+
+    {% else  %}
+      <h2>Brak przeczytanych książek</h2>
     {% endif %}
 
-    <h2>Zrecenzowane książki</h2>
-    {% if reviews %}
-      {% for r in reviews %}
-        <p>
-          <div class="card mb-3">
-            <h7 class="card-header">
-              <a href="{% url 'personal_collection:title' r.read.book_title.id %}">{{ r.read.book_title.title }}</a>
-              {{ r.read.book_title.author }}
-              <a class="btn btn-primary" href="{% url 'book_reviews:edit_review' r.id %}">Edytuj recenzję</a>
-            </h7>
-          </div>
-        </p>
-      {% endfor %}
-    {% else %}
-      <h3>Brak zrecenzowanych książek</h3>
-    {% endif %}
+
 
 
   {% endblock content %}
