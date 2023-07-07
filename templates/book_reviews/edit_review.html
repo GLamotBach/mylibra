@@ -12,7 +12,7 @@
   {% endblock page_header %}
 
   {% block content %}
-    <form action="{% url 'book_reviews:edit_review' review.id %}" method='post' enctype="multipart/form-data">
+    <form action="{% url 'book_reviews:edit_review' review.read_id %}" method='post' enctype="multipart/form-data">
      {% csrf_token %}
      {% bootstrap_form form %}
      <button name="submit" class="btn btn-primary">Zapisz zmiany</button>
