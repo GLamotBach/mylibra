@@ -17,15 +17,46 @@
   <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' title.id %}">Dodaj</a>
   {% if book_is_read %}
     <p>Przeczytana</p>
+    {% if users_rating %}
+      <p>Twoja ocena: {{ users_rating.rating }}</p>
+    {% else %}
+      <p>Twoja ocena: Brak</p>
+    {% endif %}
   {% else %}
     <p><a class="btn btn-primary" href="{% url 'book_reviews:read_book' title.id %}">Oznacz jako przeczytaną</a></p>
   {% endif %}
+
+  {% if average_rating %}
+  <p>Średnia ocena: {{ average_rating }}</p>
+  {% else %}
+  <p>Książka nie została jeszcze oceniona</p>
+  {% endif %}
+
 
   <p>Autor: <b>{{ title.author }}</b></p>
   <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
   <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
   <img src="{{ title.cover.url }}" width="200" height="300">
+
+  {% if book_is_read %}
+    {% if users_review %}
+      <h3>Twoja recenzja:</h3>
+      <p>{{ users_review.review }}</p>
+    {% else %}
+      <p>Nie dodałeś jeszcze recenzji</p>
+    {% endif %}
+  {% endif %}
+
+  {% if reviews %}
+    <h3>Recenzje:</h3>
+    {% for review in reviews %}
+
+      <p>{{ review.user.userspublicprofile.public_name }} {{ review.read.bookrating.rating }} {{ review.review }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Jeszcze nie zrecenzowano tej książki</p>
+  {% endif %}
 
 {% endblock content %}
 </body>

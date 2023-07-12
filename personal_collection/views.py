@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, Http404
-from django.db.models import Q
+from django.db.models import Q, Avg
 from .models import BookCopy, BookTitle
 from .forms import BookTitleForm, BooKCopyForm
-from book_reviews.models import ReadBook
+from book_reviews.models import ReadBook, BookRating, BookReview
 
 
 def index(request):
@@ -38,7 +38,28 @@ def copy_view(request, copy_id):
     if read:
         book_is_read = True
 
-    context = {'copy': copy, 'title': title, 'ownership': ownership, 'book_is_read': book_is_read}
+    # Fetching the average rating for the book
+    ratings = BookRating.objects.filter(book=title.id).aggregate(Avg("rating"))
+    if ratings['rating__avg']:
+        average_rating = round(ratings['rating__avg'], 1)
+    else:
+        average_rating = False
+
+    # Fetching users rating of the book if it exists
+    users_rating = BookRating.objects.filter(book=title.id, reader=request.user).first()
+
+    # Fetching users book review
+    users_review = BookReview.objects.filter(title_id=title.id, user_id=request.user).first()
+
+    context = {
+        'copy': copy,
+        'title': title,
+        'ownership': ownership,
+        'book_is_read': book_is_read,
+        'average_rating': average_rating,
+        'users_rating': users_rating,
+        'users_review': users_review,
+    }
     return render(request, 'personal_collection/copy.html', context)
 
 
@@ -132,10 +153,31 @@ def title_view(request, title_id):
     title = BookTitle.objects.get(id=title_id)
 
     # Checking if user has read this book
-    read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
-    book_is_read = False
-    if read:
-        book_is_read = True
+    book_is_read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
 
-    context = {'title': title, 'book_is_read': book_is_read}
+    # Fetching the average rating for the book
+    ratings = BookRating.objects.filter(book=title_id).aggregate(Avg("rating"))
+    if ratings['rating__avg']:
+        average_rating = round(ratings['rating__avg'], 1)
+    else:
+        average_rating = False
+
+    # Fetching users rating of the book if it exists
+    users_rating = BookRating.objects.filter(book=title_id, reader=request.user).first()
+
+    # Fetching users book review
+    users_review = BookReview.objects.filter(title=title_id, user=request.user).first()
+
+    # Fetching all reviews of the title
+    reviews = BookReview.objects.filter(title=title_id).select_related()
+
+    context = {
+        'title': title,
+        'book_is_read': book_is_read,
+        'average_rating': average_rating,
+        'users_rating': users_rating,
+        'users_review': users_review,
+        'reviews': reviews,
+    }
+
     return render(request, 'personal_collection/title.html', context)
