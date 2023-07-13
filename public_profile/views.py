@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, Http404
 from .models import UsersPublicProfile
 from .forms import UsersPublicProfileForm
 from friend_list.models import FriendList, FriendInvite
+from personal_collection.models import BookCopy
 
 
 @login_required
@@ -73,6 +74,20 @@ def profile_view(request, profile_id):
                     invitation_to_accept = True
 
 
-    context = {'profile': profile, 'own_profile': own_profile, 'already_friend': already_friend,
-               'invitation_pending': invitation_pending, 'invitation_to_accept': invitation_to_accept,}
+    context = {
+        'profile': profile,
+        'own_profile': own_profile,
+        'already_friend': already_friend,
+        'invitation_pending': invitation_pending,
+        'invitation_to_accept': invitation_to_accept,
+    }
     return render(request, 'public_profile/profile.html', context)
+
+@login_required
+def public_book_collection(request, profile_id):
+    """Public book list of a selected user"""
+    profile = UsersPublicProfile.objects.get(id=profile_id)
+    book_list = BookCopy.objects.filter(owner=profile.user)
+
+    context = {'profile': profile, 'book_list': book_list}
+    return render(request, 'public_profile/book_collection.html', context)

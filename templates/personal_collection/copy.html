@@ -51,6 +51,16 @@
     {% endif %}
   {% endif %}
 
+  {% if reviews %}
+    <h3>Recenzje:</h3>
+    {% for review in reviews %}
+
+      <p>{{ review.user.userspublicprofile.public_name }} {{ review.read.bookrating.rating }} {{ review.review }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Jeszcze nie zrecenzowano tej książki</p>
+  {% endif %}
+
 {% endblock content %}
 </body>
 </html>
