@@ -51,6 +51,9 @@ def copy_view(request, copy_id):
     # Fetching users book review
     users_review = BookReview.objects.filter(title_id=title.id, user_id=request.user).first()
 
+    # Fetching all reviews of the title
+    reviews = BookReview.objects.filter(title=title.id).select_related()
+
     context = {
         'copy': copy,
         'title': title,
@@ -59,6 +62,7 @@ def copy_view(request, copy_id):
         'average_rating': average_rating,
         'users_rating': users_rating,
         'users_review': users_review,
+        'reviews': reviews,
     }
     return render(request, 'personal_collection/copy.html', context)
 

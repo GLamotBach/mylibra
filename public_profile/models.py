@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 class UsersPublicProfile(models.Model):
     """Contains the information for the user's public profile"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     public_name = models.CharField(max_length=20)
     location = models.CharField(max_length=50, blank=True)
     bio = models.TextField(max_length=300, blank=True)
