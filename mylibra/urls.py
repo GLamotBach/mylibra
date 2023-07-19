@@ -22,6 +22,7 @@ from personal_collection import views
 from public_profile import views
 from friend_list import views
 from book_reviews import views
+from lend_manager import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +31,7 @@ urlpatterns = [
     path('profile/', include('public_profile.urls')),
     path('friend/', include('friend_list.urls')),
     path('review/', include('book_reviews.urls')),
+    path('lend/', include('lend_manager.urls')),
 ]
 
 if settings.DEBUG:

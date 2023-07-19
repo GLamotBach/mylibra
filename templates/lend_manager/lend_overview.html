@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Wypożyczone</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block page_header %}
+    <h1>Wypożyczalnia</h1>
+  {% endblock page_header %}
+
+  {% block content %}
+    <h3>Twoje prośby o pożyczenie:</h3>
+    {% for book in lend_requests_by_user %}
+      <div class="card mb-3">
+        <h7 class="card-header">
+          <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
+            od {{ book.copy_owner.userspublicprofile.public_name }}
+        </h7>
+      </div>
+    {% empty %}
+      <h4>Nie masz aktywnych próśb</h4>
+    {% endfor %}
+
+    <h3>Znajomi chcą pożyczyć od ciebie:</h3>
+    {% for book in lend_requests_to_user %}
+      <div class="card mb-3">
+        <h7 class="card-header">
+          <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
+            od {{ book.requesting_user.userspublicprofile.public_name }}
+        </h7>
+      </div>
+    {% empty %}
+      <h4>Nie masz aktywnych próśb</h4>
+    {% endfor %}
+  {% endblock content %}
+
+</body>
+</html>

@@ -17,6 +17,7 @@
     <p><a href="{% url 'public_profile:edit_profile' %}">Edytuj</a></p>
   {% elif already_friend %}
     <p>Znajomy</p>
+    <p><a href="{% url 'public_profile:public_collection' profile.id %}">Kolekcja</a></p>
   {% elif invitation_pending %}
     <p>Zaproszenie wysłane</p>
   {% elif invitation_to_accept %}

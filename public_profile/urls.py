@@ -11,4 +11,6 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile_view, name='edit_profile'),
     # User's public profile page
     path('<int:profile_id>/', views.profile_view, name='profile'),
+    # User's public book collection
+    path('<int:profile_id>/collection>/', views.public_book_collection_view, name='public_collection'),
 ]

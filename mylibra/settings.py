@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'users',
     'friend_list',
     'book_reviews',
+    'lend_manager',
     # Other company apps
     'django_bootstrap5',
     # Django default apps

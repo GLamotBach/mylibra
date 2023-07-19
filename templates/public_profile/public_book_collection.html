@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Zbiór użytkownika</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block page_header %}
+    <h1>Zbiór książek - {{ profile.public_name }}</h1>
+  {% endblock page_header %}
+
+  {% block content %}
+    {% for book in book_list %}
+      <div class="card mb-3">
+        <h7 class="card-header">
+          <a href="{% url 'personal_collection:title' book.book_title.id %}">{{ book }}</a>
+          {{ book.book_title.author }}
+          <a class="btn btn-primary" href="{% url 'lend_manager:lend_request' book.id %}">Poproś o pożyczenie</a>
+        </h7>
+      </div>
+    {% empty %}
+      <h3>{{ profile.public_name }} nie posiada jeszcze książek w kolekcji.</h3>
+
+    {% endfor %}
+  {% endblock content %}
+
+</body>
+</html>
