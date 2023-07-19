@@ -84,10 +84,10 @@ def profile_view(request, profile_id):
     return render(request, 'public_profile/profile.html', context)
 
 @login_required
-def public_book_collection(request, profile_id):
+def public_book_collection_view(request, profile_id):
     """Public book list of a selected user"""
     profile = UsersPublicProfile.objects.get(id=profile_id)
     book_list = BookCopy.objects.filter(owner=profile.user)
 
     context = {'profile': profile, 'book_list': book_list}
-    return render(request, 'public_profile/book_collection.html', context)
+    return render(request, 'public_profile/public_book_collection.html', context)

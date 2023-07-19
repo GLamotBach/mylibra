@@ -38,7 +38,7 @@ class BookRating(models.Model):
     STAR_RATING_CHOICES = [(ONE_STAR, "1"), (TWO_STAR, "2"), (THREE_STAR, "3"), (FOUR_STAR, "4"), (FIVE_STAR, "5")]
 
     read = models.OneToOneField(ReadBook, on_delete=models.CASCADE)
-    book = models.ForeignKey(BookTitle, on_delete=models.CASCADE) #Czy konieczne ?
+    book = models.ForeignKey(BookTitle, on_delete=models.CASCADE)
     reader = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(choices=STAR_RATING_CHOICES)
 
