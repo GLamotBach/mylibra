@@ -14,3 +14,17 @@ class LendRequest(models.Model):
         """Returns requesting user's id in admin panel"""
         return self.requesting_user
 
+
+class LendCopy(models.Model):
+    """Book copy that is currently being lended from the owner to another user"""
+    from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+    copy = models.ForeignKey(BookCopy, on_delete=models.CASCADE)
+    lend_start = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Returns copy owners id in admin panel"""
+        return self.from_user
+
+
+

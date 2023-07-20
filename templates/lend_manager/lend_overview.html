@@ -30,6 +30,7 @@
         <h7 class="card-header">
           <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
             od {{ book.requesting_user.userspublicprofile.public_name }}
+          <a class="btn btn-primary" href="{% url 'lend_manager:lend_accept' book.id %}">Akceptuj</a>
         </h7>
       </div>
     {% empty %}
