@@ -7,3 +7,4 @@ class LendRequestForm(forms.ModelForm):
         model = LendRequest
         fields = []
         labels = {}
+

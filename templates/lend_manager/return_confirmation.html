@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>MyLibra - Zwrot książki</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+</head>
+<body>
+  {% block page_header %}
+    <h1>Potwierdzenie zwrotu</h1>
+  {% endblock page_header %}
+  {% block content %}
+  <h3>Czy jesteś pewien że "{{ return_book.copy }}" została ci zwrócona przez
+      {{ return_book.to_user.userspublicprofile.public_name }} ?</h3>
+  <a class="btn btn-primary" href="{% url 'lend_manager:book_returned' lend_copy_id %}">Tak</a>
+  <a class="btn btn-primary" href="{% url 'lend_manager:lend_overview' %}">Anuluj</a>
+  {% endblock content %}
+
+</body>
+</html>
