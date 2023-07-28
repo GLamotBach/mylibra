@@ -19,6 +19,51 @@
 
   </style>
 
+  {% if user.is_authenticated %}
+<div class="container text-center">
+<div class="row mb-3">
+  <div class="col-sm-3 mb-3 mb-sm-0 d-flex align-items-stretch">
+    <div class="card bg-light">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-center">Kolekcja</h5>
+        <p class="card-text">Dodawaj książki do swojej kolekcji i dziel się nimi ze swoimi znajomymi.</p>
+        <a href="{% url 'personal_collection:myshelf' %}" class="btn btn-primary mt-auto">Kolekcja</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 d-flex align-items-stretch">
+    <div class="card bg-light">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-center">Przeczytane</h5>
+        <p class="card-text">Pokaż które książki przeczytałeś, oceniaj je i dodawaj recenzje.</p>
+        <a href="{% url 'book_reviews:my_read_list' %}" class="btn btn-primary mt-auto">Przeczytane</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 d-flex align-items-stretch">
+    <div class="card bg-light">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-center">Znajomi</h5>
+        <p class="card-text">Znajdż swoich znajomych aby móc dzielić się z nimi swoimi recenzjami i pożyczć sobie
+          książki</p>
+        <a href="{% url 'friend_list:friendlist' %}" class="btn btn-primary mt-auto">Znajomi</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 d-flex align-items-stretch">
+    <div class="card bg-light">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-center">Wypożyczalnia</h5>
+        <p class="card-text">Pożycz książkę od znajomego albo podziel się swoim księgozbiorem. W wygodny sposób, miej na
+          oku gdzie są twoje książki.</p>
+        <a href="{% url 'lend_manager:lend_overview' %}" class="btn btn-primary mt-auto">Wypożyczalnia</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+  {% else %}
   <div class="jumbotron p-4 bg-light">
     <h1 class="display-4">MyLibra</h1>
     <p class="lead">Twój księgozbiór pod kontrolą</p>
@@ -26,9 +71,11 @@
     <p>Załóż konto, aby rozpocząć korzystanie z MyLibra</p>
     <p class="lead">
       <a class="btn btn-primary btn-lg" href="{% url 'users:register' %}" role="button">Utwórz konto</a>
+        lub
+        <a class="btn btn-primary btn-lg" href="{% url 'users:login' %}" role="button">Zaloguj się</a>
     </p>
   </div>
-
+  {% endif %}
 {% endblock page_header %}
 
 </body>

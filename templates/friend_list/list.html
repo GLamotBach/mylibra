@@ -5,26 +5,56 @@
     <title>MyLibra - Znajomi</title>
     {% extends "personal_collection/base.html" %}
     {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
+  {% block page_header %}
+
+    <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
+    <h1>Twoi znajomi</h1>
+  {% endblock page_header %}
 
 {% block content %}
-  <p>
-      <a href="{% url 'friend_list:invitations' %}">Zaproszenia</a>
-  </p>
-   <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
-      {% csrf_token %}
-      <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
-      <button type="submit">Szukaj</button>
-  </form>
-  <h3>Znajomi:</h3>
+  <div class="container mb-3">
+      <div class="row">
+        <div class="col-sm">
+            <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
+              {% csrf_token %}
+              <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
+              <button type="submit">Szukaj</button>
+            </form>
+        </div>
+          <div class="col-sm-2">
+            <a href="{% url 'friend_list:invitations' %}">Zaproszenia</a>
+          </div>
+      </div>
+  </div>
+  <div class="container">
+      <div class="row mb-1">
   {% for friend in friends %}
-    <p>
-        <a href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
-    </p>
+
+        <div class="col-sm-2">
+          <div class="card bg-light">
+            <img src="{{ friend.friend.image.url }}" width="150" height="225">
+            <a href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
+          </div>
+        </div>
+
   {% empty %}
     <h5>Nie dodałeś jeszcze znajomych</h5>
   {% endfor %}
+    </div>
+  </div>
 {% endblock content %}
 </body>
 </html>

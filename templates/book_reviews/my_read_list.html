@@ -5,10 +5,23 @@
     <title>MyLibra - Przeczytane książki</title>
     {% extends "personal_collection/base.html" %}
     {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
 
   {% block page_header %}
+
+    <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
     <h1>Przeczytane książki</h1>
   {% endblock page_header %}
 
@@ -17,26 +30,32 @@
 
       {% for book in read_books %}
 
-        <p>
-          <div class="card mb-3">
-            <h7 class="card-header">
-              <a href="{% url 'personal_collection:title' book.book_title.id %}">{{ book.book_title.title }}</a>
-              {{ book.book_title.author }}
+        <div class="container">
+          <div class="row bg-light mb-1">
+            <div class="col-sm-6">
+            <h7><a href="{% url 'personal_collection:title' book.book_title.id %}">{{ book.book_title.title }}</a></h7>
+            </div>
+            <div class="col-sm-3">
+              <h7>{{ book.book_title.author }}</h7>
+            </div>
+            <div class="col-sm-3">
 
               {% if book.bookreview %}
-                <a class="btn btn-primary" href="{% url 'book_reviews:edit_review' book.id %}">Edytuj recenzję</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'book_reviews:edit_review' book.id %}">Edytuj recenzję</a>
               {% else %}
-                <a class="btn btn-primary" href="{% url 'book_reviews:add_review' book.id %}">Dodaj recenzję</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'book_reviews:add_review' book.id %}">Dodaj recenzję</a>
               {% endif %}
 
               {% if book.bookrating %}
-              Twoja ocena: {{ book.bookrating.rating }}
+              <h7>Twoja ocena: {{ book.bookrating.rating }}</h7>
               {% else %}
-                <a class="btn btn-primary" href="{% url 'book_reviews:rate_book' book.id %}">Oceń</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'book_reviews:rate_book' book.id %}">Oceń</a>
               {% endif %}
-            </h7>
+
+              </div>
+            </div>
           </div>
-        </p>
+        </div>
       {% endfor %}
 
     {% else  %}
