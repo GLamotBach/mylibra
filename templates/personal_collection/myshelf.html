@@ -8,29 +8,55 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     {% load static %}
+
 </head>
 <body>
 
 {% block page_header %}
+
+   <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
   <h1>Twoja kolekcja</h1>
 {% endblock page_header %}
 
 {% block content %}
-  <p>
-    <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
-      <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
+  <div class="container mb-3">
+      <div class="row">
+        <div class="col-sm">
+            <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
         {% csrf_token %}
         <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
         <button type="submit">Szukaj</button>
       </form>
-  </p>
+        </div>
+        <div class="col-sm-2">
+            <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
+        </div>
+      </div>
+  </div>
 
-  {% for book in books %}
-    <div class="card mb-3">
-      <h7 class="card-header">
-          <a href="{% url 'personal_collection:copy' book.id %}">{{ book }}</a>
-          {{ book.book_title.author }}
-      </h7>
+ {% for book in books %}
+    <div class="container">
+      <div class="row bg-light mb-1">
+        <div class="col-sm-6">
+            <h7><a href="{% url 'personal_collection:copy' book.id %}">{{ book }}</a></h7>
+        </div>
+          <div class="col-sm-3">
+              <h7>{{ book.book_title.author }}</h7>
+          </div>
+          <div class="col-sm-3">
+              <h7>{{ book.book_title.genre }}</h7>
+          </div>
+      </div>
     </div>
   {% empty %}
       <li>Nie masz jeszcze żadnej książki w kolekcji</li>

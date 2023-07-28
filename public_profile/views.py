@@ -21,7 +21,7 @@ def profile_setup_view(request):
             profile.save()
             return redirect('personal_collection:index')
 
-    context = {'form': form}
+    context = {'form': form }
     return render(request, 'public_profile/setup.html', context)
 
 
