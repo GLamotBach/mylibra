@@ -12,7 +12,9 @@ def friend_list_view(request):
     """Page displaying the friend list"""
     list_owner = UsersPublicProfile.objects.get(user_id=request.user)
     friends = FriendList.objects.filter(list_owner=list_owner.id).select_related("friend")
-    context = {'friends': friends,}
+
+    invites = FriendInvite.objects.filter(to_user=list_owner).count()
+    context = {'friends': friends, 'invites': invites,}
     return render(request, 'friend_list/list.html', context)
 
 
@@ -80,8 +82,8 @@ def invitation_accept_view(request, profile_id):
 
     # Deleting accepted invitation
     invitation.delete()
-    context = {'accepted_user': accepted_user,}
-    return render(request, 'friend_list/confirmation.html', context)
+
+    return redirect('friend_list:invitations')
 
 
 @login_required
