@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, Http404
+from django.contrib.auth.models import User
 
 from .models import UsersPublicProfile
 from .forms import UsersPublicProfileForm
@@ -11,10 +12,11 @@ from personal_collection.models import BookCopy
 @login_required
 def profile_setup_view(request):
     """Initial public profile setup"""
+
     if request.method != 'POST':
         form = UsersPublicProfileForm()
     else:
-        form = UsersPublicProfileForm(data=request.POST)
+        form = UsersPublicProfileForm(request.POST, request.FILES,)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.user = request.user

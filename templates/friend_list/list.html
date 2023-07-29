@@ -36,6 +36,9 @@
         </div>
           <div class="col-sm-2">
             <a href="{% url 'friend_list:invitations' %}">Zaproszenia</a>
+              {% if invites > 0 %}
+              Oczekujące: {{ invites }}
+              {% endif %}
           </div>
       </div>
   </div>
