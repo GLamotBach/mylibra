@@ -5,34 +5,84 @@
     <title>MyLibra - Wyszukiwanie</title>
     {% extends "personal_collection/base.html" %}
     {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
 
 {% block page_header %}
+
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
   <h1>Użytkownicy - Wyniki wyszukiwania dla: {{ query }}</h1>
 {% endblock page_header %}
 
  {% block content %}
+    <div class="container mb-3">
+      <div class="row">
+        <div class="col-sm">
 
-  <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
-      {% csrf_token %}
-      <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
-      <button type="submit">Szukaj</button>
-  </form>
+          <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
+              {% csrf_token %}
+              <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
+              <button type="submit">Szukaj</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <h3>Znajomi:</h3>
+    <div class="container">
+      <div class="row">
+        {% if query %}
+          {% if friends %}
 
-   {% if query %}
-    {% if results %}
-      {% for result in results %}
-        <p>
-          <a href="{% url 'public_profile:profile' result.id %}">{{ result.public_name }}</a>
-        </p>
+            {% for friend in friends %}
+              <div class="col-sm-2 mb-3">
+                <div class="card bg-light">
+                  <img src="{{ friend.image.url }}" class="card-img-top" ale="Profil">
+                  <a class="card-text text-center" href="{% url 'public_profile:profile' friend.id %}">
+                      {{ friend.public_name }}</a>
+                </div>
+              </div>
+
       {% endfor %}
     {% else %}
-      <h3>Brak wyników wyszukiwania</h3>
+      <h4>Brak wyników wyszukiwania wśród znajomych</h4>
+    {% endif %}
+
+    {% if strangers %}
+      <h3>Użytkownicy z poza listy znajomych:</h3>
+          <div class="container">
+            <div class="row">
+      {% for stranger in strangers %}
+
+            <div class="col-sm-2 mb-3">
+              <div class="card bg-light">
+                  <img src="{{ stranger.image.url }}" class="card-img-top" ale="Profil">
+                  <a href="{% url 'public_profile:profile' stranger.id %}">{{ stranger.public_name }}</a>
+                  <a href="{% url 'friend_list:invite' stranger.id %}" class="btn btn-primary mt-auto">Zaproś</a>
+              </div>
+            </div>
+
+      {% endfor %}
+    {% else %}
+      <h4>Brak użytkowników o podanych kryteriach.</h4>
     {% endif %}
   {% else %}
     <h3>Podaj nazwę użytkownika którego chcesz wyszukać</h3>
   {% endif %}
+
+        </div>
+      </div>
+
 
  {% endblock content %}
 </body>
