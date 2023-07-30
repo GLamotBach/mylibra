@@ -91,10 +91,25 @@ def user_search_view(request):
     """Shows the results of searching for users"""
     if request.method == 'POST':
         search_query = request.POST["search_query"]
-        results = UsersPublicProfile.objects.filter(public_name__icontains=search_query)
-        context = {'query': search_query, 'results': results,}
+        results = UsersPublicProfile.objects.filter(public_name__icontains=search_query).select_related()
+
+        # Checking if each user is in friend list
+        searching_user = UsersPublicProfile.objects.get(user=request.user)
+        friends = []
+        strangers = []
+
+        for result in results:
+            friendship = FriendList.objects.filter(friend=result.id,list_owner=searching_user)
+            if friendship.exists():
+                friends.append(result)
+            else:
+                strangers.append(result)
+
+        context = {'query': search_query, 'friends': friends, 'strangers': strangers, }
+
     else:
         context = {}
+
     return render(request, 'friend_list/search.html', context)
 
 

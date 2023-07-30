@@ -43,13 +43,13 @@
       </div>
   </div>
   <div class="container">
-      <div class="row mb-1">
+      <div class="row">
   {% for friend in friends %}
 
-        <div class="col-sm-2">
+        <div class="col-sm-2 mb-3">
           <div class="card bg-light">
-            <img src="{{ friend.friend.image.url }}" width="150" height="225">
-            <a href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
+            <img src="{{ friend.friend.image.url }}" class="card-img-top" ale="Profil">
+            <a class="card-text text-center" href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
           </div>
         </div>
 
