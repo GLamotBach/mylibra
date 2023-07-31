@@ -45,11 +45,13 @@
           {% if friends %}
 
             {% for friend in friends %}
-              <div class="col-sm-2 mb-3">
+              <div class="col-sm-2 mb-3 d-flex align-items-stretch">
                 <div class="card bg-light">
+                    <div class="card-body d-flex flex-column">
                   <img src="{{ friend.image.url }}" class="card-img-top" ale="Profil">
-                  <a class="card-text text-center" href="{% url 'public_profile:profile' friend.id %}">
+                  <a class="card-text text-center mt-auto" href="{% url 'public_profile:profile' friend.id %}">
                       {{ friend.public_name }}</a>
+                    </div>
                 </div>
               </div>
 
@@ -64,11 +66,14 @@
             <div class="row">
       {% for stranger in strangers %}
 
-            <div class="col-sm-2 mb-3">
+            <div class="col-sm-2 mb-3 d-flex align-items-stretch">
               <div class="card bg-light">
+                  <div class="card-body d-flex flex-column">
                   <img src="{{ stranger.image.url }}" class="card-img-top" ale="Profil">
-                  <a href="{% url 'public_profile:profile' stranger.id %}">{{ stranger.public_name }}</a>
-                  <a href="{% url 'friend_list:invite' stranger.id %}" class="btn btn-primary mt-auto">Zaproś</a>
+                  <a class="card-text text-center mt-auto" href="{% url 'public_profile:profile' stranger.id %}">
+                      {{ stranger.public_name }}</a>
+                  <a href="{% url 'friend_list:invite' stranger.user_id %}" class="btn btn-primary mt-auto">Zaproś</a>
+                  </div>
               </div>
             </div>
 

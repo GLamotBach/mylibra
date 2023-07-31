@@ -46,10 +46,13 @@
       <div class="row">
   {% for friend in friends %}
 
-        <div class="col-sm-2 mb-3">
+        <div class="col-sm-2 mb-3 d-flex align-items-stretch">
           <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
             <img src="{{ friend.friend.image.url }}" class="card-img-top" ale="Profil">
-            <a class="card-text text-center" href="{% url 'public_profile:profile' friend.friend.id %}">{{ friend.friend.public_name }}</a>
+            <a class="card-text text-center mt-auto" href="{% url 'public_profile:profile' friend.friend.id %}">
+                {{ friend.friend.public_name }}</a>
+              </div>
           </div>
         </div>
 

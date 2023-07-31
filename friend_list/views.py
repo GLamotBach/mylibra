@@ -87,6 +87,27 @@ def invitation_accept_view(request, profile_id):
 
 
 @login_required
+def invitation_reject_view(request, profile_id):
+    """Removes invitation without adding a new friend to list"""
+    rejecting_user = UsersPublicProfile.objects.get(user_id=request.user)
+    rejected_user = UsersPublicProfile.objects.get(id=profile_id)
+    invitation = FriendInvite.objects.get(to_user=rejecting_user, from_user=rejected_user)
+    invitation.delete()
+    return redirect('friend_list:invitations')
+
+
+@login_required
+def invitation_cancel_view(request, profile_id):
+    """Cancels the invitation issued previously by the user"""
+    canceling_user = UsersPublicProfile.objects.get(user_id=request.user)
+    canceled_user = UsersPublicProfile.objects.get(id=profile_id)
+    invitation = FriendInvite.objects.get(to_user=canceled_user, from_user=canceling_user)
+    invitation.delete()
+    return redirect('friend_list:invitations')
+
+
+
+@login_required
 def user_search_view(request):
     """Shows the results of searching for users"""
     if request.method == 'POST':
