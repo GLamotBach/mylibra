@@ -7,6 +7,7 @@ from .models import UsersPublicProfile
 from .forms import UsersPublicProfileForm
 from friend_list.models import FriendList, FriendInvite
 from personal_collection.models import BookCopy
+from book_reviews.models import ReadBook, BookReview, BookRating
 
 
 @login_required
@@ -75,6 +76,12 @@ def profile_view(request, profile_id):
                 if invitation_received.exists():
                     invitation_to_accept = True
 
+    # Counters for profile statistics
+    count_friends = FriendList.objects.filter(list_owner=profile).count()
+    count_collection = BookCopy.objects.filter(owner=profile.user).count()
+    count_read = ReadBook.objects.filter(reader=profile.user).count()
+    count_reviews = BookReview.objects.filter(user=profile.user).count()
+    count_ratings = BookRating.objects.filter(reader=profile.user).count()
 
     context = {
         'profile': profile,
@@ -82,6 +89,12 @@ def profile_view(request, profile_id):
         'already_friend': already_friend,
         'invitation_pending': invitation_pending,
         'invitation_to_accept': invitation_to_accept,
+        'count_friends': count_friends,
+        'count_collection': count_collection,
+        'count_read': count_read,
+        'count_reviews': count_reviews,
+        'count_ratings': count_ratings,
+
     }
     return render(request, 'public_profile/profile.html', context)
 

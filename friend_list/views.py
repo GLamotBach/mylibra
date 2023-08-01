@@ -106,7 +106,6 @@ def invitation_cancel_view(request, profile_id):
     return redirect('friend_list:invitations')
 
 
-
 @login_required
 def user_search_view(request):
     """Shows the results of searching for users"""
