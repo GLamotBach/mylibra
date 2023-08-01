@@ -33,13 +33,13 @@
         <div class="col-sm-2 mb-3 d-flex align-items-stretch">
           <div class="card bg-light">
             <div class="card-body d-flex flex-column">
-
-        <img src="{{ i.from_user.image.url }}" class="card-img-top" ale="Profil">
-        <a class="card-text text-center mt-auto" href="{% url 'public_profile:profile' i.from_user.id %}">{{ i.from_user.public_name }}</a>
-        <a class="btn btn-primary mt-auto btn-sm" href="{% url 'friend_list:accept_invite' i.from_user.id %}">Potwierdź</a>
-        <a class="btn btn-danger mt-auto btn-sm" href="{% url 'friend_list:reject_invite' i.from_user.id %}">Odrzuć</a>
-
-
+              <img src="{{ i.from_user.image.url }}" class="card-img-top" ale="Profil">
+              <a class="card-text text-center mt-auto mb-1" href="{% url 'public_profile:profile' i.from_user.id %}">
+                  {{ i.from_user.public_name }}</a>
+              <a class="btn btn-primary mt-auto btn-sm mb-1" href="{% url 'friend_list:accept_invite' i.from_user.id %}">
+                  Potwierdź</a>
+              <a class="btn btn-danger mt-auto btn-sm" href="{% url 'friend_list:reject_invite' i.from_user.id %}">
+                  Odrzuć</a>
             </div>
           </div>
         </div>
@@ -51,17 +51,27 @@
 
     <br/>
   <h3>Twoje zaproszenia oczekujące na potwierdzenie</h3>
-    {% for o in outbox %}
-      <p>
-        <a href="{% url 'public_profile:profile' o.to_user.id %}">
+    <div class="container">
+        <div class="row">
+          {% for o in outbox %}
+             <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+               <div class="card bg-light">
+                 <div class="card-body d-flex flex-column">
+                   <img src="{{ o.to_user.image.url }}" class="card-img-top" ale="Profil">
+
+        <a class="card-text text-center mt-auto mb-1" href="{% url 'public_profile:profile' o.to_user.id %}">
         {{ o.to_user.public_name }}
         </a>
-        <a href="{% url 'friend_list:cancel_invite' o.to_user.id %}">Anuluj</a>
+        <a class="btn btn-danger mt-auto btn-sm" href="{% url 'friend_list:cancel_invite' o.to_user.id %}">Anuluj</a>
+                 </div>
+               </div>
+             </div>
 
-      </p>
     {% empty %}
       <h5>Nie wysłałeś zaproszeń oczekujących na akceptacje</h5>
     {% endfor %}
+        </div>
+    </div>
   {% endblock content %}
 
 </body>

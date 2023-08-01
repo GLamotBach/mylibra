@@ -6,13 +6,32 @@
     <title>MyLibra - Profile</title>
 </head>
 <body>
-{% extends "personal_collection/base.html" %}
+  {% extends "personal_collection/base.html" %}
+  {% load django_bootstrap5 %}
+  {% load static %}
 
 {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
   <h1>{{ profile.public_name }}</h1>
 {% endblock page_header %}
 
 {% block content %}
+    <div class="container mb-3">
+      <div class="row">
+        <div class="col-sm">
+          <div class="container mb-3">
+            <div class="row">
+              <div class="col-sm">
   {% if own_profile %}
     <p><a href="{% url 'public_profile:edit_profile' %}">Edytuj</a></p>
   {% elif already_friend %}
@@ -25,12 +44,32 @@
   {% else %}
     <p><a href="{% url 'friend_list:invite' profile.user_id %}">Zaproś</a></p>
   {% endif %}
+              </div>
+              </div>
 
+            
+
+              <div class="row">
+                <div class="col-sm">
   <p>Lokacja: {{ profile.location }}</p>
   <p>Bio:</p>
   <p>{{ profile.bio }}</p>
-  <img src="{{ profile.image.url }}" width="200" height="300">
-
+  <p>
+    Znajomi: {{ count_friends }}
+    Książki w kolekcji: {{ count_collection }}
+    Przeczytane: {{ count_read }}
+    Recenzje: {{ count_reviews }}
+    Ocenione: {{ count_ratings }}
+  </p>
+              </div>
+              </div>
+              </div>
+        </div>
+        <div class="col-6">
+  <img src="{{ profile.image.url }}"  width="300" height="450">
+        </div>
+      </div>
+    </div>
 {% endblock content %}
 
 </body>
