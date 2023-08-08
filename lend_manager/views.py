@@ -19,6 +19,31 @@ def lend_request_view(request, copy_id):
 
     return redirect('lend_manager:lend_overview')
 
+
+@login_required
+def cancel_lend_request_view(request, lend_request_id):
+    """View for handling cancellation of a request"""
+    canceled_request = LendRequest.objects.get(id=lend_request_id)
+    if request.user != canceled_request.requesting_user:
+        raise Http404
+    else:
+        canceled_request.delete()
+
+    return redirect('lend_manager:lend_overview')
+
+
+@login_required
+def refuse_lend_request_view(request, lend_request_id):
+    """View for handling refusing a lend request"""
+    refused_request = LendRequest.objects.get(id=lend_request_id)
+    if request.user != refused_request.copy_owner:
+        raise Http404
+    else:
+        refused_request.delete()
+
+    return redirect('lend_manager:lend_overview')
+
+
 @login_required
 def lend_accept_view(request, lend_request_id):
     """View for handling accepting a lend_request"""

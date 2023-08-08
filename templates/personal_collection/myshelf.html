@@ -44,23 +44,26 @@
       </div>
   </div>
 
- {% for book in books %}
+
     <div class="container">
-      <div class="row bg-light mb-1">
-        <div class="col-sm-6">
+      <div class="row">
+          {% for book in books %}
+         <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+             <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                  <img src="{{ book.book_title.cover.url }}" class="card-img-top" ale="Profil">
             <h7><a href="{% url 'personal_collection:copy' book.id %}">{{ book }}</a></h7>
-        </div>
-          <div class="col-sm-3">
               <h7>{{ book.book_title.author }}</h7>
-          </div>
-          <div class="col-sm-3">
               <h7>{{ book.book_title.genre }}</h7>
+              </div>
+             </div>
           </div>
-      </div>
-    </div>
+
   {% empty %}
       <li>Nie masz jeszcze żadnej książki w kolekcji</li>
   {% endfor %}
+          </div>
+    </div>
 
 {% endblock content %}
 </body>

@@ -2,15 +2,41 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>MyLibra - Profile Setup</title>
+
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    {% load static %}
+
 </head>
 <body>
-  <p>Skonfiguruj swój publiczny profil:</p>
+  <div class="container">
+  <div class="pb-2 mb-2 mt-4 border-bottom">
+  {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
 
+      a { text-decoration: none; }
+  </style>
+    <h1>Skonfiguruj swój publiczny profil:</h1>
+  {% endblock page_header %}
+
+  {% block content %}
   <form action="{% url 'public_profile:setup' %}" method='post' enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button name="submit">Zatwierdź</button>
+    {% bootstrap_form form %}
+    <button name="submit" class="btn btn-primary">Zatwierdź</button>
   </form>
+  {% endblock content %}
+  </div>
+  </div>
+
 </body>
 </html>

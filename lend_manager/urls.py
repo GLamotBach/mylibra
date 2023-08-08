@@ -10,4 +10,6 @@ urlpatterns = [
     path('lend_accept/<int:lend_request_id>/', views.lend_accept_view, name='lend_accept'),
     path('book_returned/<int:lend_copy_id>/', views.book_return_view, name='book_returned'),
     path('confirmation/<int:lend_copy_id>/', views.book_return_confirmation_view, name='return_confirmation'),
+    path('cancel/<int:lend_request_id>/', views.cancel_lend_request_view, name='cancel_request'),
+    path('refuse/<int:lend_request_id>/', views.refuse_lend_request_view, name='refuse_request'),
 ]

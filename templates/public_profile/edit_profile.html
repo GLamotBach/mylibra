@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>MyLibra - Edycja profilu</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
-{% extends "personal_collection/base.html" %}
-{% load django_bootstrap5 %}
 
 {% block page_header %}
+
+    <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
   <h1>Edytuj profil publiczny:</h1>
 {% endblock page_header %}
 

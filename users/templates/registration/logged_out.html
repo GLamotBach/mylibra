@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>MyLibra - Logout</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
-{% extends "personal_collection/base.html" %}
 
 {% block page_header %}
-  <div class="jumbotron">
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/logout.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
+  <div class="jumbotron p-4 bg-light">
     <h1 class="display-3">Poprawnie wylogowano</h1>
 
     <p class="lead">Zaloguj się by korzystać z MyLibra</p>
