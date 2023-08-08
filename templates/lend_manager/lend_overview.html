@@ -5,70 +5,105 @@
     <title>MyLibra - Wypożyczone</title>
     {% extends "personal_collection/base.html" %}
     {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
   {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
     <h1>Wypożyczalnia</h1>
   {% endblock page_header %}
 
   {% block content %}
-    <p>
+
     <h3>Twoje prośby o pożyczenie:</h3>
+      <div class="container">
+        <div class="row">
     {% for book in lend_requests_by_user %}
-      <div class="card mb-3">
-        <h7 class="card-header">
-          <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
-            od {{ book.copy_owner.userspublicprofile.public_name }}
-        </h7>
-      </div>
+          <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                <img src="{{ book.copy.book_title.cover.url }}" class="card-img-top" alt="Okładka">
+                <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
+                od {{ book.copy_owner.userspublicprofile.public_name }}
+                <a class="btn btn-danger" href="{% url 'lend_manager:cancel_request' book.id %}">Anuluj</a>
+              </div>
+            </div>
+          </div>
     {% empty %}
       <h4>Nie masz aktywnych próśb</h4>
     {% endfor %}
-    </p>
+        </div>
+      </div>
 
-    <p>
+
     <h3>Znajomi chcą pożyczyć od ciebie:</h3>
+      <div class="container">
+        <div class="row">
     {% for book in lend_requests_to_user %}
-      <div class="card mb-3">
-        <h7 class="card-header">
-          <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
-            od {{ book.requesting_user.userspublicprofile.public_name }}
-          <a class="btn btn-primary" href="{% url 'lend_manager:lend_accept' book.id %}">Akceptuj</a>
-        </h7>
-      </div>
+          <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                <img src="{{ book.copy.book_title.cover.url }}" class="card-img-top" alt="Okładka">
+                <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
+                od {{ book.requesting_user.userspublicprofile.public_name }}
+                <a class="btn btn-primary" href="{% url 'lend_manager:lend_accept' book.id %}">Akceptuj</a>
+                <a class="btn btn-danger" href="{% url 'lend_manager:refuse_request' book.id %}">Odrzuć</a>
+              </div>
+            </div>
+          </div>
     {% empty %}
       <h4>Nie masz aktywnych próśb</h4>
     {% endfor %}
-    </p>
+        </div>
+      </div>
 
-    <p>
     <h3>Pożyczyłeś od znajomych:</h3>
+      <div class="container">
+        <div class="row">
     {% for book in books_lend_to_user %}
-      <div class="card mb-3">
-        <h7 class="card-header">
-          <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
-            od {{ book.from_user.userspublicprofile.public_name }}
-        </h7>
-      </div>
+          <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                <img src="{{ book.copy.book_title.cover.url }}" class="card-img-top" alt="Okładka">
+                <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
+                od {{ book.from_user.userspublicprofile.public_name }}
+              </div>
+            </div>
+          </div>
     {% empty %}
       <h4>Nie pożyczasz żadnych książek</h4>
     {% endfor %}
-    </p>
+        </div>
+      </div>
 
-    <p>
     <h3>Twoje książki pożyczone znajomym:</h3>
+      <div class="container">
+        <div class="row">
     {% for book in books_lend_by_user %}
-      <div class="card mb-3">
-        <h7 class="card-header">
-          <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
-            u {{ book.to_user.userspublicprofile.public_name }}
-          <a class="btn btn-primary" href="{% url 'lend_manager:return_confirmation' book.id %}">Zwrócona</a>
-        </h7>
-      </div>
+          <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                <img src="{{ book.copy.book_title.cover.url }}" class="card-img-top" alt="Okładka">
+                <a href="{% url 'personal_collection:copy' book.copy_id %}">{{ book.copy }}</a>
+                u {{ book.to_user.userspublicprofile.public_name }}
+                <a class="btn btn-primary" href="{% url 'lend_manager:return_confirmation' book.id %}">Zwrócona</a>
+              </div>
+            </div>
+          </div>
     {% empty %}
       <h4>Nie pożyczasz żadnych książek</h4>
     {% endfor %}
-    </p>
+        </div>
+      </div>
 
   {% endblock content %}
 
