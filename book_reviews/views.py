@@ -51,7 +51,7 @@ def add_review_view(request, read_book_id):
             review.save()
             return redirect('book_reviews:my_read_list')
 
-    context = {'form': form, 'read_book_id': read_book_id,}
+    context = {'form': form, 'read_book_id': read_book_id, 'book_read': book_read,}
     return render(request, 'book_reviews/add_review.html', context)
 
 

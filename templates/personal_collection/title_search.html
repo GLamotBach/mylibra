@@ -5,42 +5,78 @@
     <title>MyLibra - Szukaj tytułu</title>
     {% extends "personal_collection/base.html" %}
     {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
 
 {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
   <h1>Książki - Wyniki wyszukiwania dla: {{ query }}</h1>
 {% endblock page_header %}
 
 {% block content %}
 
-  <p>
-  <form role="search" method="post" action="{% url 'personal_collection:title_search' %}">
-      {% csrf_token %}
-      <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
-      <button type="submit">Szukaj</button>
-  </form>
-  </p>
-  <p>
-  <a class="btn btn-primary" href="{% url 'personal_collection:new_title' %}">Dodaj nowy tytuł</a>
-  </p>
+  <div class="container mb-3">
+      <div class="row">
+        <div class="col-sm">
+          <form role="search" method="post" action="{% url 'personal_collection:title_search' %}">
+          {% csrf_token %}
+          <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
+          <button type="submit" class="btn btn-primary">Szukaj</button>
+          </form>
+        </div>
+          <div class="col-sm-2">
+            <a class="btn btn-primary" href="{% url 'personal_collection:new_title' %}">Dodaj nowy tytuł</a>
+          </div>
+      </div>
+  </div>
+
 
 {% if query %}
+
     {% if results %}
+<div class="container">
+      <div class="row">
       {% for result in results %}
-        <p>
-          <div class="card mb-3">
-            <h7 class="card-header">
-              <a href="{% url 'personal_collection:title' result.id %}">{{ result.title }}</a>
-              {{ result.author }}
-              <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' result.id %}">Dodaj</a>
-            </h7>
-          </div>
-        </p>
+          <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                  <img src="{{ result.cover.url }}" class="card-img-top" alt="cover">
+                  <h7 class="card-text mt-auto"><a href="{% url 'personal_collection:title' result.id %}">
+                      {{ result.title }}
+                  </a></h7>
+                  <h7 class="card-text mt-auto">{{ result.author }}</h7>
+              <a class="btn btn-primary btn-sm" href="{% url 'personal_collection:add_to_collection' result.id %}">
+                  Dodaj
+              </a>
+            </div>
+            </div>
+        </div>
       {% endfor %}
+          </div>
+  </div>
     {% else %}
-      <h3>Brak wyników wyszukiwania</h3>
+      <div class="jumbotron p-4 bg-light">
+    <h1 class="display-4">Brak wyników wyszukiwania</h1>
+    <p class="lead">Spróbuj innego zapytania</p>
+    <hr class="my-4">
+    <p>Jeżeli nie możesz znaleźć czego szukasz, to być może nikt jeszcze nie dodał tej książki do MyLibra.<br>
+        Możesz dodać nowy tytuł i pomóc nam się rozwijać.</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="{% url 'personal_collection:new_title' %}">Dodaj nowy tytuł</a>
+    </p>
+  </div>
     {% endif %}
+
   {% else %}
     <h3>Podaj nazwę książki którą chcesz wyszukać</h3>
   {% endif %}

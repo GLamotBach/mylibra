@@ -35,7 +35,7 @@
             <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
         {% csrf_token %}
         <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
-        <button type="submit">Szukaj</button>
+        <button class="btn btn-primary" type="submit">Szukaj</button>
       </form>
         </div>
         <div class="col-sm-2">
@@ -51,10 +51,10 @@
          <div class="col-sm-2 mb-3 d-flex align-items-stretch">
              <div class="card bg-light">
               <div class="card-body d-flex flex-column">
-                  <img src="{{ book.book_title.cover.url }}" class="card-img-top" ale="Profil">
-            <h7><a href="{% url 'personal_collection:copy' book.id %}">{{ book }}</a></h7>
-              <h7>{{ book.book_title.author }}</h7>
-              <h7>{{ book.book_title.genre }}</h7>
+                  <img src="{{ book.book_title.cover.url }}" class="card-img-top" alt="cover">
+            <h7><a href="{% url 'personal_collection:copy' book.id %}" class="mt-auto">{{ book }}</a></h7>
+              <h7 class="card-text mt-auto">{{ book.book_title.author }}</h7>
+              <!-- <h7 class="card-text mt-auto">{{ book.book_title.genre }}</h7> -->
               </div>
              </div>
           </div>

@@ -3,26 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>MyLibra - Dodaj do kolekcji</title>
+    {% extends "personal_collection/base.html" %}
+    {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
-{% extends "personal_collection/base.html" %}
 
 {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
   <h1>Czy chcesz dodać do swojej kolekcji...</h1>
 {% endblock page_header %}
 
 {% block content %}
 
-  <h2>{{ title.title }}</h2>
-  <p>Autor: <b>{{ title.author }}</b></p>
-  <p>Gatunek: <b>{{ title.genre }}</b></p>
+  <div class="jumbotron p-4 bg-light">
+    <h1 class="display-4">{{ title.title }}</h1>
+    <p class="lead">Autor: <b>{{ title.author }}</b></p>
+    <hr class="my-4">
+    <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
   <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
-  <form action="{% url 'personal_collection:add_to_collection' title.id %}" method='post'>
+    <p class="lead">
+      <form action="{% url 'personal_collection:add_to_collection' title.id %}" method='post'>
     {% csrf_token %}
     {{ form.as_p }}
     <button name='submit' class="btn btn-primary">Dodaj do kolekcji</button>
   </form>
+    </p>
+  </div>
 {% endblock content %}
 </body>
 </html>
