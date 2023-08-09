@@ -5,36 +5,67 @@
     <title>MyLibra - Wyszukiwanie</title>
     {% extends "personal_collection/base.html" %}
     {% load django_bootstrap5 %}
+    {% load static %}
+
 </head>
 <body>
 {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
+
   <h1>Twoja kolekcja - Wyniki wyszukiwania dla: {{ query }}</h1>
 {% endblock page_header %}
 
 {% block content %}
-  <p>
-  <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
-  <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
-      {% csrf_token %}
-      <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
-      <button type="submit">Szukaj</button>
-  </form>
-  </p>
+  <div class="container mb-3">
+      <div class="row">
+        <div class="col-sm">
+
+          <form role="search" method="post" action="{% url 'personal_collection:copy_search' %}">
+          {% csrf_token %}
+              <input type="search" placeholder="Wyszukaj w kolekcji" name="search_query" required aria-label="Search">
+          <button class="btn btn-primary" type="submit">Szukaj</button>
+        </div>
+        <div class="col-sm-2">
+              <a class="btn btn-primary" href="{% url 'personal_collection:title_search' %}">Dodaj tytuł</a>
+          </form>
+        </div>
+      </div>
+  </div>
+
 {% if query %}
+
     {% if results %}
+<div class="container">
+      <div class="row">
       {% for result in results %}
-        <div class="card mb-3">
-          <h7 class="card-header">
-            <a href="{% url 'personal_collection:copy' result.id %}">{{ result }}</a>
-              {{ result.book_title.author }}
-          </h7>
+        <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+            <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                  <img src="{{ result.book_title.cover.url }}" class="card-img-top" alt="cover">
+                  <h7><a href="{% url 'personal_collection:copy' result.id %}" class="card-text mt-auto">{{ result }}</a></h7>
+                  <h7 class="card-text mt-auto">{{ result.book_title.author }}</h7>
+                  <!-- <h7 class="card-text mt-auto">{{ result.book_title.genre }}</h7> -->
+              </div>
+            </div>
         </div>
       {% endfor %}
+          </div>
+  </div>
     {% else %}
       <h3>Brak wyników wyszukiwania</h3>
     {% endif %}
+
   {% else %}
-    <h3>Podaj nazwę książki którą chcesz wyszukać</h3>
+<h3>Podaj nazwę książki którą chcesz wyszukać</h3>
   {% endif %}
 
 {% endblock content %}

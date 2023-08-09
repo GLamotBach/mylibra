@@ -28,35 +28,39 @@
   {% block content %}
     {% if read_books %}
 
+  <div class="container">
+      <div class="row">
       {% for book in read_books %}
 
-        <div class="container">
-          <div class="row bg-light mb-1">
-            <div class="col-sm-6">
-            <h7><a href="{% url 'personal_collection:title' book.book_title.id %}">{{ book.book_title.title }}</a></h7>
-            </div>
-            <div class="col-sm-3">
-              <h7>{{ book.book_title.author }}</h7>
-            </div>
-            <div class="col-sm-3">
+        <div class="col-sm-2 mb-3 d-flex align-items-stretch">
+             <div class="card bg-light">
+              <div class="card-body d-flex flex-column">
+                <img src="{{ book.book_title.cover.url }}" class="card-img-top" alt="cover">
+            <h7 class="card-text mt-auto"><a href="{% url 'personal_collection:title' book.book_title.id %}">
+              {{ book.book_title.title }}</a></h7>
+
+              <h7 class="card-text mt-auto">{{ book.book_title.author }}</h7>
 
               {% if book.bookreview %}
-                <a class="btn btn-primary btn-sm" href="{% url 'book_reviews:edit_review' book.id %}">Edytuj recenzję</a>
+                <a class="btn btn-primary btn-sm mb-1 mt-auto" href="{% url 'book_reviews:edit_review' book.id %}">
+                  Edytuj recenzję</a>
               {% else %}
-                <a class="btn btn-primary btn-sm" href="{% url 'book_reviews:add_review' book.id %}">Dodaj recenzję</a>
+                <a class="btn btn-primary btn-sm mb-1 mt-auto" href="{% url 'book_reviews:add_review' book.id %}">
+                  Dodaj recenzję</a>
               {% endif %}
 
               {% if book.bookrating %}
               <h7>Twoja ocena: {{ book.bookrating.rating }}</h7>
               {% else %}
-                <a class="btn btn-primary btn-sm" href="{% url 'book_reviews:rate_book' book.id %}">Oceń</a>
+                <a class="btn btn-primary btn-sm mt-auto" href="{% url 'book_reviews:rate_book' book.id %}">Oceń</a>
               {% endif %}
 
-              </div>
             </div>
           </div>
         </div>
       {% endfor %}
+  </div>
+  </div>
 
     {% else  %}
       <h2>Brak przeczytanych książek</h2>
