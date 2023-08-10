@@ -156,6 +156,11 @@ def title_view(request, title_id):
     """Detailed information about a book title"""
     title = BookTitle.objects.get(id=title_id)
 
+    # Checking if user has this book in their collection
+    book_in_collection = BookCopy.objects.filter(book_title=title_id, owner=request.user).first()
+    if book_in_collection:
+        return redirect('personal_collection:copy', copy_id=book_in_collection.id)
+
     # Checking if user has read this book
     book_is_read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
 

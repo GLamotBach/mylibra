@@ -5,40 +5,80 @@
     <title>MyLibra - Tytuł</title>
     {% extends 'personal_collection/base.html' %}
     {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
 
 {% block page_header %}
+  <style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
   <h1>{{ title.title }}</h1>
 {% endblock page_header %}
 
 {% block content %}
 
-  <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' title.id %}">Dodaj</a>
+<div class="container">
+      <div class="row row-cols-lg-auto g-3 align-items-left">
+        <div class="col-sm">
+  <a class="btn btn-primary" href="{% url 'personal_collection:add_to_collection' title.id %}">Dodaj do kolekcji</a>
+        </div>
+
   {% if book_is_read %}
+        <div class="col-sm">
+            <div class="card bg-light px-2">
     <p>Przeczytana</p>
+            </div>
+        </div>
     {% if users_rating %}
+        <div class="col-sm">
       <p>Twoja ocena: {{ users_rating.rating }}</p>
+        </div>
     {% else %}
+      <div class="col-sm">
       <p>Twoja ocena: Brak</p>
+      </div>
     {% endif %}
   {% else %}
+        <div class="col-sm">
     <p><a class="btn btn-primary" href="{% url 'book_reviews:read_book' title.id %}">Oznacz jako przeczytaną</a></p>
+        </div>
   {% endif %}
+      </div>
+</div>
 
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+      <div class="container bg-light">
   {% if average_rating %}
   <p>Średnia ocena: {{ average_rating }}</p>
   {% else %}
   <p>Książka nie została jeszcze oceniona</p>
   {% endif %}
+      </div>
 
-
+      <div class="container bg-light">
   <p>Autor: <b>{{ title.author }}</b></p>
   <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
   <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
+      </div>
+    </div>
+    <div class="col">
   <img src="{{ title.cover.url }}" width="200" height="300">
+    </div>
+  </div>
+</div>
 
+<div class="container bg-light">
   {% if book_is_read %}
     {% if users_review %}
       <h3>Twoja recenzja:</h3>
@@ -47,7 +87,9 @@
       <p>Nie dodałeś jeszcze recenzji</p>
     {% endif %}
   {% endif %}
+</div>
 
+<div class="container bg-light">
   {% if reviews %}
     <h3>Recenzje:</h3>
     {% for review in reviews %}
@@ -57,6 +99,7 @@
   {% else %}
     <p>Jeszcze nie zrecenzowano tej książki</p>
   {% endif %}
+</div>
 
 {% endblock content %}
 </body>
