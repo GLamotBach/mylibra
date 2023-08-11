@@ -4,62 +4,153 @@
 <head>
     <meta charset="UTF-8">
     <title>MyLibra - Książka</title>
+    {% extends 'personal_collection/base.html' %}
+    {% load django_bootstrap5 %}
+    {% load static %}
 </head>
 <body>
-{% extends 'personal_collection/base.html' %}
-
 {% block page_header %}
+<style>
+    body {
+      background-image: url("{% static 'personal_collection/images/paper_background.jpg' %}") ;
+    }
+    .bg-light {
+      --bs-bg-opacity: 0.75;
+    }
+
+      a { text-decoration: none; }
+  </style>
   <h1>{{ title.title }}</h1>
 {% endblock page_header %}
 
 {% block content %}
+<div class="container">
+      <div class="row row-cols-lg-auto g-3 align-items-left mb-2">
   {% if book_is_read %}
-    <p>Przeczytana</p>
+    <div class="col-sm">
+          <button type="button" class="btn btn-secondary" disabled>Przeczytana</button>
+        </div>
     {% if users_rating %}
-      <p>Twoja ocena: {{ users_rating.rating }}</p>
+      <div class="col-sm">
+            <button type="button" class="btn btn-secondary" disabled>Twoja ocena: {{ users_rating.rating }}</button>
+        </div>
     {% else %}
-      <p>Twoja ocena: Brak</p>
+      <div class="col-sm">
+     <a class="btn btn-primary" href="{% url 'book_reviews:rate_book' read.id %}">Oceń</a>
+      </div>
     {% endif %}
   {% else %}
-    <p><a class="btn btn-primary" href="{% url 'book_reviews:read_book' title.id %}">Oznacz jako przeczytaną</a></p>
+    <div class="col-sm">
+    <a class="btn btn-primary" href="{% url 'book_reviews:read_book' title.id %}">Oznacz jako przeczytaną</a>
+        </div>
   {% endif %}
+        {% if ownership %}
+    <div class="col-sm">
+      <a class="btn btn-primary" href="{% url 'personal_collection:edit_title' copy.id %}">Edytuj</a>
+    </div>
+  {% endif %}
+      </div>
+</div>
 
+<div class="container mb-3">
+  <div class="row">
+    <div class="col">
+      <div class="container">
+          <div class="card bg-light mb-2 pt-2">
+              <div class="text-center">
   {% if average_rating %}
-    <p>Średnia ocena: {{ average_rating }}</p>
+    <h4>Średnia ocena: {{ average_rating }}</h4>
   {% else %}
-    <p>Książka nie została jeszcze oceniona</p>
+    <h4>Książka nie została jeszcze oceniona</h4>
   {% endif %}
+                </div>
+          </div>
+      </div>
 
+      <div class="container">
+          <div class="card bg-light py-2 px-2">
   <p>Autor: <b>{{ title.author }}</b></p>
   <p>Gatunek: <b>{{ title.genre }}</b></p>
   <p>Język: <b>{{ title.language }}</b></p>
   <p>ISBN: <b>{{ title.isbn_nr }}</b></p>
+            </div>
+      </div>
+    </div>
+    <div class="col">
   <img src="{{ title.cover.url }}" width="200" height="300">
+      </div>
+  </div>
+</div>
 
-  {% if ownership %}
-    <p>
-      <a class="btn btn-primary" href="{% url 'personal_collection:edit_title' copy.id %}">Edytuj</a>
-    </p>
-  {% endif %}
-
+<div class="container">
+    <div class="row mb-2">
   {% if book_is_read %}
     {% if users_review %}
+      <div class="col-sm d-flex align-items-stretch">
+    <div class="card bg-light">
+      <div class="card-body d-flex flex-column">
       <h3>Twoja recenzja:</h3>
       <p>{{ users_review.review }}</p>
+        </div>
+    </div>
+        </div>
     {% else %}
-      <p>Nie dodałeś jeszcze recenzji</p>
+      <div class="col-sm">
+    <div class="card bg-light">
+      <div class="card-body">
+          <div class="text-center">
+      <h5 class="card-title">Twoja recenzja nie została jeszcze dodana</h5>
+          <p class="card-text">Podziel się swoją opinią na temat tej książki.</p>
+          <a href="{% url 'book_reviews:add_review' read.id %}" class="btn btn-primary mt-auto ">Dodaj recenzję</a>
+          </div>
+          </div>
+    </div>
+        </div>
     {% endif %}
   {% endif %}
+      </div>
+</div>
 
+<div class="container mb-5 px-4">
+    <div class="row mb-2">
+         <div class="card bg-light px-3">
+<h3>Recenzje:</h3>
   {% if reviews %}
-    <h3>Recenzje:</h3>
     {% for review in reviews %}
-
-      <p>{{ review.user.userspublicprofile.public_name }} {{ review.read.bookrating.rating }} {{ review.review }}</p>
+<div class="row">
+                 <div class="card bg-light mb-1">
+                     <div class="row">
+                         <div class="col">
+                             <h5><a href="{% url 'public_profile:profile' review.user.userspublicprofile.id %}">
+                                 {{ review.user.userspublicprofile.public_name }}</a></h5>
+                         </div>
+                         <div class="col">
+                             <h5>Ocena: {{ review.read.bookrating.rating }}</h5>
+                         </div>
+                     </div>
+                         <div class="row">
+                             <div class="col">
+                             {{ review.review }}
+                             </div>
+                         </div>
+                 </div>
+             </div>
     {% endfor %}
   {% else %}
-    <p>Jeszcze nie zrecenzowano tej książki</p>
+    <div class="col-sm">
+    <div class="card bg-light mb-2">
+      <div class="card-body">
+          <div class="text-center">
+              <h5 class="card-title">Ta książka nie posiada jeszcze recenzji</h5>
+              </div>
+          </div>
+    </div>
+        </div>
   {% endif %}
+           </div>
+    </div>
+</div>
+</div>
 
 {% endblock content %}
 </body>
