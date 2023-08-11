@@ -109,12 +109,14 @@ def invitation_cancel_view(request, profile_id):
 @login_required
 def user_search_view(request):
     """Shows the results of searching for users"""
+    searching_user = UsersPublicProfile.objects.get(user=request.user)
+    invites = FriendInvite.objects.filter(to_user=searching_user).count()
+
     if request.method == 'POST':
         search_query = request.POST["search_query"]
         results = UsersPublicProfile.objects.filter(public_name__icontains=search_query).select_related()
 
         # Checking if each user is in friend list
-        searching_user = UsersPublicProfile.objects.get(user=request.user)
         friends = []
         strangers = []
 
@@ -122,10 +124,12 @@ def user_search_view(request):
             friendship = FriendList.objects.filter(friend=result.id,list_owner=searching_user)
             if friendship.exists():
                 friends.append(result)
+            elif result.user == request.user:
+                pass
             else:
                 strangers.append(result)
 
-        context = {'query': search_query, 'friends': friends, 'strangers': strangers, }
+        context = {'query': search_query, 'friends': friends, 'strangers': strangers, 'invites': invites, }
 
     else:
         context = {}

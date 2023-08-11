@@ -29,13 +29,18 @@
     <div class="container mb-3">
       <div class="row">
         <div class="col-sm">
-
           <form role="search" method="post" action="{% url 'friend_list:user_search' %}">
               {% csrf_token %}
               <input type="search" placeholder="Wyszukaj" name="search_query" required aria-label="Search">
-              <button type="submit">Szukaj</button>
+              <button class="btn btn-primary" type="submit">Szukaj</button>
           </form>
         </div>
+          <div class="col-sm-3">
+            <a class="btn btn-primary" href="{% url 'friend_list:invitations' %}">Zaproszenia</a>
+              {% if invites > 0 %}
+              Oczekujące: {{ invites }}
+              {% endif %}
+          </div>
       </div>
     </div>
     <h3>Znajomi:</h3>

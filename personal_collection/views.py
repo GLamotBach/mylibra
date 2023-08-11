@@ -33,7 +33,7 @@ def copy_view(request, copy_id):
         ownership = True
 
     # Checking if user has read this book
-    read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
+    read = ReadBook.objects.filter(book_title=title.id, reader=request.user).first()
     book_is_read = False
     if read:
         book_is_read = True
@@ -63,6 +63,7 @@ def copy_view(request, copy_id):
         'users_rating': users_rating,
         'users_review': users_review,
         'reviews': reviews,
+        'read': read,
     }
     return render(request, 'personal_collection/copy.html', context)
 
@@ -73,7 +74,7 @@ def new_title_view(request):
     if request.method != 'POST':
         form = BookTitleForm()
     else:
-        form = BookTitleForm(data=request.POST)
+        form = BookTitleForm(request.POST, request.FILES)
         if form.is_valid():
             title = form.save(commit=False)
             title.added_by = request.user
@@ -162,7 +163,7 @@ def title_view(request, title_id):
         return redirect('personal_collection:copy', copy_id=book_in_collection.id)
 
     # Checking if user has read this book
-    book_is_read = ReadBook.objects.filter(book_title=title.id, reader=request.user)
+    book_is_read = ReadBook.objects.filter(book_title=title.id, reader=request.user).first()
 
     # Fetching the average rating for the book
     ratings = BookRating.objects.filter(book=title_id).aggregate(Avg("rating"))

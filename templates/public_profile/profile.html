@@ -26,82 +26,83 @@
 {% endblock page_header %}
 
 {% block content %}
-    <div class="container mb-3">
-      <div class="row">
-        <div class="col-sm">
-          <div class="container mb-3 bg-light">
-            <div class="row mb-3">
-
+  <div class="container">
+      <div class="row row-cols-lg-auto g-3 align-items-left mb-2">
   {% if own_profile %}
               <div class="col-sm">
-    <a href="{% url 'public_profile:edit_profile' %}">Edytuj</a>
+    <a class="btn btn-primary" href="{% url 'public_profile:edit_profile' %}">Edytuj</a>
               </div>
   {% elif already_friend %}
               <div class="col-sm">
-    Znajomy
-    <a href="{% url 'public_profile:public_collection' profile.id %}">Kolekcja</a>
+                  <button type="button" class="btn btn-secondary" disabled>Znajomy</button>
+              </div>
+          <div class="col-sm">
+    <a class="btn btn-primary" href="{% url 'public_profile:public_collection' profile.id %}">Kolekcja</a>
               </div>
 
   {% elif invitation_pending %}
               <div class="col-sm">
-    Zaproszenie wysłane
+    <button type="button" class="btn btn-secondary" disabled>Zaproszenie wysłane</button>
               </div>
   {% elif invitation_to_accept %}
               <div class="col-sm">
-    Zaproszenie otrzymane <a href="{% url 'friend_list:accept_invite' profile.id %}">Potwierdź</a>
+    <a class="btn btn-primary" href="{% url 'friend_list:accept_invite' profile.id %}">Potwierdź zaproszenie</a>
               </div>
 
   {% else %}
               <div class="col-sm">
-    <a href="{% url 'friend_list:invite' profile.user_id %}">Zaproś</a>
+    <a class="btn btn-primary" href="{% url 'friend_list:invite' profile.user_id %}">Zaproś</a>
                   </div>
   {% endif %}
 
               </div>
+  </div>
 
-<div class="row mb-3">
+<div class="container">
+      <div class="row row-cols-lg-auto g-3 align-items-left mb-2">
     <div class="col-sm">
-    Znajomi: {{ count_friends }}
+        <button type="button" class="btn btn-secondary" disabled>Znajomi: {{ count_friends }}</button>
     </div>
      <div class="col-sm">
-    W kolekcji: {{ count_collection }}
+    <a class="btn btn-primary" href="{% url 'public_profile:public_collection' profile.id %}">
+        W kolekcji: {{ count_collection }}</a>
     </div>
      <div class="col-sm">
-    Przeczytane: {{ count_read }}
+         <button type="button" class="btn btn-secondary" disabled>Przeczytane: {{ count_read }}</button>
     </div>
      <div class="col-sm">
-    Recenzje: {{ count_reviews }}
+         <button type="button" class="btn btn-secondary" disabled>Recenzje: {{ count_reviews }}</button>
      </div>
      <div class="col-sm">
-    Ocenione: {{ count_ratings }}
+         <button type="button" class="btn btn-secondary" disabled>Ocenione: {{ count_ratings }}</button>
     </div>
 </div>
+</div>
 
-
+<div class="container">
               <div class="row mb-3">
-                <div class="col-sm">
-  <p>Lokacja: {{ profile.location }}</p>
+                  <div class="col-sm-3">
+                       <div class="card bg-light">
+  <img src="{{ profile.image.url }}" alt="Profile picture">
+                       </div>
+                  </div>
+                <div class="col-sm-6">
+                    <div class="row mb-2">
+                         <div class="card bg-light">
+                             <h5 class="card-title">Lokacja:</h5>
+      <p class="card-text">{{ profile.location }}</p>
+                         </div>
+                </div>
+                    <div class="row mb-2">
+                        <div class="card bg-light">
+                            <h5 class="card-title">Bio:</h5>
+                            <p class="card-text">{{ profile.bio }}</p>
+                        </div>
+                    </div>
                 </div>
               </div>
-              <div class="row">
-                  <div class="col-sm">
-                      <div class="container mb-1">
+</div>
 
-                          <div class="row">
-                  <div class="col-sm">
-  {{ profile.bio }}
-                       </div>
-              </div>
-                      </div>
-              </div>
-              </div>
-              </div>
-        </div>
-        <div class="col-6">
-  <img src="{{ profile.image.url }}"  width="300" height="450">
-        </div>
-      </div>
-    </div>
 
 {% endblock content %}
 
