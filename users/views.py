@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
 def register(request):
-    """Rejestracja nowego użytkownika"""
+    """User registration."""
     if request.method != 'POST':
         form = UserCreationForm()
     else:

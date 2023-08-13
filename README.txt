@@ -1,6 +1,7 @@
 MyLibra
 
-Mylibra is a web platform for managing personal book collections.
+Mylibra is a web platform for managing personal book collections and a social
+platform for book lovers.
 
 Motivation:
 MyLibra is my personal project meant as way to challenge myself and to learn,
@@ -11,27 +12,27 @@ has a hard time keeping track of their books or want to find something
 interesting to read.
 
 Build status:
-This project is in development stage. It will gain additional 
-functionality over time as well as a more pleasant and user-friendly UI.  
-For now it provides most of the intended basic functionality. It allows 
-users to create their accounts, adding and editing books in their 
-collections, find books already existing in the database, customize 
-their profiles, add friends, mark books and read, rate and review read 
-books,  In future, MyLibra will be expanded with additional functionality,
-according to road map, leading to it’s intended shape. 
+The base functionality of the project is finished. Some additional features 
+are planed to be added in time. Next stage for the project is to deploy it 
+on a PaaS platform.
 
 Features:
 - User account creation.
 - Adding books to personal collection.
 - Editing books in personal collection.
 - Search functionality.
-- Public profiles 
-- Friend list
-- Book reviews
+- Public profiles. 
+- Friend list.
+- Book reviews.
+- Book rating.
+- Book lending manager.
+- Viewing friend’s collections.
 
 Planed features:
-- Book lending manager
-- Viewing friend’s collections
+
+- Book Club.
+- Unified notifications.
+- Friends activity feed.
 - Searching for books via ISBN API
 - And more
 

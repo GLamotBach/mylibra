@@ -6,9 +6,10 @@ from personal_collection.models import BookTitle
 from .forms import ReadBookForm, BookReviewForm, BookRatingForm
 from .models import ReadBook, BookReview
 
+
 @login_required
 def read_book_view(request, title_id):
-    """View for handling adding book to read list"""
+    """View for handling adding book to read list."""
     book = BookTitle.objects.get(id=title_id)
     user = request.user
 
@@ -23,7 +24,7 @@ def read_book_view(request, title_id):
 
 @login_required
 def my_read_books_list_view(request):
-    """List of books user marked as read"""
+    """List of books user marked as read."""
     read_books = ReadBook.objects.filter(reader=request.user).select_related()
 
     context = {'read_books': read_books,}
@@ -32,7 +33,7 @@ def my_read_books_list_view(request):
 
 @login_required
 def add_review_view(request, read_book_id):
-    """Adding a users review to a read book"""
+    """Adding a users review to a read book."""
     book_read = ReadBook.objects.get(id=read_book_id)
 
     if request.user != book_read.reader:
@@ -57,7 +58,7 @@ def add_review_view(request, read_book_id):
 
 @login_required
 def edit_review_view(request, read_book_id):
-    """Editing an existing review by the user"""
+    """Editing an existing review by the user."""
     review = BookReview.objects.get(read_id=read_book_id)
     if review.user != request.user:
         raise Http404
@@ -75,7 +76,7 @@ def edit_review_view(request, read_book_id):
 
 @login_required
 def add_rating_view(request, read_book_id):
-    """Rating a book by a user"""
+    """Rating a book by a user."""
     rated_book = ReadBook.objects.get(id=read_book_id)
     if rated_book.reader != request.user:
         raise Http404
