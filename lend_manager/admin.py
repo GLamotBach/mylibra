@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import LendRequest, LendCopy
+
+admin.site.register(LendRequest)
+admin.site.register(LendCopy)

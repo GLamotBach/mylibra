@@ -5,18 +5,18 @@ from personal_collection.models import BookTitle
 
 
 class ReadBook(models.Model):
-    """Book marked by user as already read"""
+    """Book marked by user as already read."""
     book_title = models.ForeignKey(BookTitle, on_delete=models.PROTECT)
     reader = models.ForeignKey(User, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        """Displays book title in the admin panel"""
+        """Displays book title in the admin panel."""
         return self.book_title
 
 
 class BookReview(models.Model):
-    """Book review added by user"""
+    """Book review added by user."""
     read = models.OneToOneField(ReadBook, on_delete=models.CASCADE)
     title = models.ForeignKey(BookTitle, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,12 +24,12 @@ class BookReview(models.Model):
     review = models.TextField(max_length=5000, null=True)
 
     def __str__(self):
-        """Displays the user and the reviewed book in admin panel"""
+        """Displays the user and the reviewed book in admin panel."""
         return f"{self.user}: {self.title}"
 
 
 class BookRating(models.Model):
-    """Rating of a book by an user"""
+    """Rating of a book by a user."""
     ONE_STAR = 1
     TWO_STAR = 2
     THREE_STAR = 3
@@ -43,5 +43,5 @@ class BookRating(models.Model):
     rating = models.IntegerField(choices=STAR_RATING_CHOICES)
 
     def __str__(self):
-        """Displays book and reader who added the rating in the admin panel"""
+        """Displays book and reader who added the rating in the admin panel."""
         return f"{self.post.book}: {self.reader}"

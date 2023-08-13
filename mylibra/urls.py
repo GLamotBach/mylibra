@@ -1,18 +1,3 @@
-"""mylibra URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
@@ -25,12 +10,19 @@ from book_reviews import views
 from lend_manager import views
 
 urlpatterns = [
+    # Admin functions.
     path('admin/', admin.site.urls),
+    # User account handling.
     path('users/', include('users.urls')),
+    # Book collections.
     path('', include('personal_collection.urls')),
+    # Public profiles of users.
     path('profile/', include('public_profile.urls')),
+    # Friend list functionality.
     path('friend/', include('friend_list.urls')),
+    # Book reviews and ratings.
     path('review/', include('book_reviews.urls')),
+    # Book lending manager.
     path('lend/', include('lend_manager.urls')),
 ]
 

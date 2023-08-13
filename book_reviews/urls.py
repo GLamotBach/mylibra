@@ -1,4 +1,4 @@
-"""URL patterns for book_reviews"""
+"""URL patterns for book_reviews."""
 
 from django.urls import path
 from . import views

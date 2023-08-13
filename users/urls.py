@@ -1,4 +1,4 @@
-"""Definicje wzorców adresów URL aplikacji users"""
+"""URL patterns for users app."""
 
 from django.urls import path, include
 
@@ -6,8 +6,8 @@ from . import views
 
 app_name = 'users'
 urlpatterns = [
-    # Domyślne adresy URL uwierzytelnienia
+    # Default URL's for authentication.
     path('', include('django.contrib.auth.urls')),
-    # Strona rejestracji
+    # Registration page.
     path('register', views.register, name='register'),
 ]

@@ -12,7 +12,7 @@ from book_reviews.models import ReadBook, BookReview, BookRating
 
 @login_required
 def profile_setup_view(request):
-    """Initial public profile setup"""
+    """Initial public profile setup."""
 
     if request.method != 'POST':
         form = UsersPublicProfileForm()
@@ -30,7 +30,7 @@ def profile_setup_view(request):
 
 @login_required
 def edit_profile_view(request):
-    """Page for editing user's public profile"""
+    """Page for editing user's public profile."""
     profile = UsersPublicProfile.objects.get(user=request.user)
 
     if profile.user != request.user:
@@ -50,24 +50,24 @@ def edit_profile_view(request):
 
 @login_required
 def profile_view(request, profile_id):
-    """Users public profile page"""
+    """Users public profile page."""
     profile = UsersPublicProfile.objects.get(id=profile_id)
 
     own_profile = False
     already_friend = False
     invitation_pending = False
     invitation_to_accept = False
-    # Check if profile page belongs to the request user
+    # Check if profile page belongs to the request user.
     if profile.user == request.user:
         own_profile = True
     else:
-        # Check if profile page belongs to a friend
+        # Check if profile page belongs to a friend.
         list_owner = UsersPublicProfile.objects.get(user_id=request.user)
         friends = FriendList.objects.filter(list_owner=list_owner, friend=profile_id)
         if friends.exists():
             already_friend = True
         else:
-            # Check if owner of profile page has been invited to friends
+            # Check if owner of profile page has been invited to friends.
             invitation_send = FriendInvite.objects.filter(from_user=list_owner, to_user=profile_id)
             if invitation_send.exists():
                 invitation_pending = True
@@ -76,7 +76,7 @@ def profile_view(request, profile_id):
                 if invitation_received.exists():
                     invitation_to_accept = True
 
-    # Counters for profile statistics
+    # Counters for profile statistics.
     count_friends = FriendList.objects.filter(list_owner=profile).count()
     count_collection = BookCopy.objects.filter(owner=profile.user).count()
     count_read = ReadBook.objects.filter(reader=profile.user).count()
@@ -98,9 +98,10 @@ def profile_view(request, profile_id):
     }
     return render(request, 'public_profile/profile.html', context)
 
+
 @login_required
 def public_book_collection_view(request, profile_id):
-    """Public book list of a selected user"""
+    """Public book list of a selected user."""
     profile = UsersPublicProfile.objects.get(id=profile_id)
     book_list = BookCopy.objects.filter(owner=profile.user)
 

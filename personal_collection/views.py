@@ -8,13 +8,13 @@ from book_reviews.models import ReadBook, BookRating, BookReview
 
 
 def index(request):
-    """Main page"""
+    """Main page."""
     return render(request, 'personal_collection/index.html')
 
 
 @login_required
 def myshelf_view(request):
-    """Page containing user's book collection"""
+    """Page containing user's book collection."""
     books = BookCopy.objects.filter(owner=request.user).order_by('add_date')
 
     context = {'books': books}
@@ -23,7 +23,7 @@ def myshelf_view(request):
 
 @login_required
 def copy_view(request, copy_id):
-    """Detailed information about a book copy"""
+    """Detailed information about a book copy."""
     copy = BookCopy.objects.get(id=copy_id)
     title = BookTitle.objects.get(id=copy.book_title_id)
 
@@ -32,26 +32,26 @@ def copy_view(request, copy_id):
     if request.user == title.added_by:
         ownership = True
 
-    # Checking if user has read this book
+    # Checking if user has read this book.
     read = ReadBook.objects.filter(book_title=title.id, reader=request.user).first()
     book_is_read = False
     if read:
         book_is_read = True
 
-    # Fetching the average rating for the book
+    # Fetching the average rating for the book.
     ratings = BookRating.objects.filter(book=title.id).aggregate(Avg("rating"))
     if ratings['rating__avg']:
         average_rating = round(ratings['rating__avg'], 1)
     else:
         average_rating = False
 
-    # Fetching users rating of the book if it exists
+    # Fetching users rating of the book if it exists.
     users_rating = BookRating.objects.filter(book=title.id, reader=request.user).first()
 
-    # Fetching users book review
+    # Fetching users book review.
     users_review = BookReview.objects.filter(title_id=title.id, user_id=request.user).first()
 
-    # Fetching all reviews of the title
+    # Fetching all reviews of the title.
     reviews = BookReview.objects.filter(title=title.id).select_related()
 
     context = {
@@ -70,7 +70,7 @@ def copy_view(request, copy_id):
 
 @login_required
 def new_title_view(request):
-    """Adding a new title"""
+    """Adding a new title."""
     if request.method != 'POST':
         form = BookTitleForm()
     else:
@@ -87,7 +87,7 @@ def new_title_view(request):
 
 @login_required
 def add_to_collection_view(request, title_id):
-    """Adding a book copy to a user's collection"""
+    """Adding a book copy to a user's collection."""
     title = BookTitle.objects.get(id=title_id)
 
     if request.method != 'POST':
@@ -107,7 +107,7 @@ def add_to_collection_view(request, title_id):
 
 @login_required
 def edit_title_view(request, copy_id):
-    """Editing a book title"""
+    """Editing a book title."""
     copy = BookCopy.objects.get(id=copy_id)
     book = BookTitle.objects.get(id=copy.book_title_id)
 
@@ -128,7 +128,7 @@ def edit_title_view(request, copy_id):
 
 @login_required
 def copy_search_view(request):
-    """Shows the results of searching for book copy in collection"""
+    """Shows the results of searching for book copy in collection."""
     if request.method == 'POST':
         search_query = request.POST["search_query"]
         results = BookCopy.objects.filter\
@@ -143,7 +143,7 @@ def copy_search_view(request):
 
 @login_required
 def title_search_view(request):
-    """Shows the result of searching for book title in database"""
+    """Shows the result of searching for book title in database."""
     if request.method == 'POST':
         search_query = request.POST["search_query"]
         results = BookTitle.objects.filter(Q(title__icontains=search_query) | Q(author__icontains=search_query))
@@ -154,31 +154,31 @@ def title_search_view(request):
 
 @login_required
 def title_view(request, title_id):
-    """Detailed information about a book title"""
+    """Detailed information about a book title."""
     title = BookTitle.objects.get(id=title_id)
 
-    # Checking if user has this book in their collection
+    # Checking if user has this book in their collection.
     book_in_collection = BookCopy.objects.filter(book_title=title_id, owner=request.user).first()
     if book_in_collection:
         return redirect('personal_collection:copy', copy_id=book_in_collection.id)
 
-    # Checking if user has read this book
+    # Checking if user has read this book.
     book_is_read = ReadBook.objects.filter(book_title=title.id, reader=request.user).first()
 
-    # Fetching the average rating for the book
+    # Fetching the average rating for the book.
     ratings = BookRating.objects.filter(book=title_id).aggregate(Avg("rating"))
     if ratings['rating__avg']:
         average_rating = round(ratings['rating__avg'], 1)
     else:
         average_rating = False
 
-    # Fetching users rating of the book if it exists
+    # Fetching users rating of the book if it exists.
     users_rating = BookRating.objects.filter(book=title_id, reader=request.user).first()
 
-    # Fetching users book review
+    # Fetching users book review.
     users_review = BookReview.objects.filter(title=title_id, user=request.user).first()
 
-    # Fetching all reviews of the title
+    # Fetching all reviews of the title.
     reviews = BookReview.objects.filter(title=title_id).select_related()
 
     context = {
