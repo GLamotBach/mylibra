@@ -13,8 +13,7 @@ interesting to read.
 
 Build status:
 The base functionality of the project is finished. Some additional features 
-are planed to be added in time. Next stage for the project is to deploy it 
-on a PaaS platform.
+are planed to be added in time.
 
 Features:
 - User account creation.
@@ -44,35 +43,46 @@ PostgreSQL
 Bootstrap 5
 
 Installation:
-MyLibra is meant to (and in time will) be deployed on a PaaS platform to gain 
-it's online functionality. It can by deployed locally. 
 Please note, in settings.py file some critical information is decoupled to a 
 external file, not added to public repository for security reasons.
 
-For local installation:
+For local installation:Their are two options. 
+Virtual Environment and Docker Containers. 
+
+Option 1: Virtual Environment:
 
 1.Create a virtual environment.
 2.Deploy a new Django project.
 3.Replace files with the files from the repository.
-4.In settings.py: Fill out the information that was decoupled. That is:
-
-  SECRET_KEY
-  DEBUG
-  DB_NAME
-  DB_USER
-  DB_PASSWORD
-  DB_HOST
-  DB_PORT
-
-  This can be done by directly assigning values to the variables in settings.py 
-  or by adding a “.env” file in settings.py directory, with the information in 
-  question.   
-
-  Edit  DATABASES in settings.py in accordance with your local DB. MyLibra is 
-  intended to work with PostgreSQL but SHOULD work with other SQL databases.
+4.In settings.py: Edit  DATABASES in settings.py in accordance with your local DB.
+  MyLibra is intended to work with PostgreSQL but SHOULD work with other SQL 
+  databases.
 6.Make migrations with database
 7.Run a development server
 8.MyLIbra will be available locally at “localhost:8000/” (by default)
+
+Option 2: Docker Containers:
+
+1.Must have Docker installed on your local machine.
+1.Download mylibra container from DockerHub. 
+  At: https://hub.docker.com/r/glamotbach/mylibra
+3.Download docker-compose.yml file from repository
+4.In console, go to the location of docker-compose.yml and run:
+  $ docker-compose up -d --build
+  It may need to download postgres DB, container image.
+5.Migrate database using:
+  $ docker-compose exec web python manage.py migrate
+6.Create superuser using:
+  $ docker-compose exec web python manage.py createsuperuser 
+  And provide information with accordance to the given prompts.
+7.Go to: http://127.0.0.1:8000/admin and log in using the credentials, given in 
+  previous point.
+8.In admin panel go to: PUBLIC_PROFILE > Add and create o profile for your admin 
+  account. 
+9.The app can be accessed at: http://127.0.0.1:8000/ 
+
+WARNING ! This version of MyLibra is meant for demonstration purposes only ! 
+It is not safe for deployment !
 
 LICENSE:
 MIT License
